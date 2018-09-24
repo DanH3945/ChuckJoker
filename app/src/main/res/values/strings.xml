@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Chuck Joker</string>
+    <string name="error_joke_display_fragment_load_error_text">Oops!! Couldn\'t load a joke.</string>
 </resources>

@@ -8,10 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.List;
 
 import hereticpurge.chuckjoker.R;
+import hereticpurge.chuckjoker.model.JokeItem;
 
 public class JokeDisplayFragment extends Fragment {
+
+    private List<JokeItem> jokeItemList;
 
     public static JokeDisplayFragment createInstance(){
         return new JokeDisplayFragment();
@@ -25,6 +31,8 @@ public class JokeDisplayFragment extends Fragment {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        TextView jokeBodyTextView = view.findViewById(R.id.joke_display_joke_body_text);
 
         return view;
     }

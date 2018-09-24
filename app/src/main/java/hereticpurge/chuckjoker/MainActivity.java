@@ -25,11 +25,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
     private JokeDisplayFragment getJokeDisplayFragment() {
         return JokeDisplayFragment.createInstance();
     }
