@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import hereticpurge.chuckjoker.fragments.JokeDisplayFragment;
+import hereticpurge.chuckjoker.logging.TimberReleaseTree;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,6 +15,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (BuildConfig.DEBUG) {
+            // Timber debug tree
+            Timber.plant(new Timber.DebugTree());
+        } else {
+            // Timber Release Tree
+            Timber.plant(new TimberReleaseTree());
+        }
 
         if (savedInstanceState == null) {
             loadFragment(getJokeDisplayFragment(), false, null);

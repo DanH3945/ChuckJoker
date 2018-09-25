@@ -1,16 +1,17 @@
-package hereticpurge.chuckjoker.utils;
+package hereticpurge.chuckjoker.logging;
 
-import android.util.Log;
+import timber.log.Timber;
 
 public final class DebugAssistant {
 
-    private DebugAssistant(){}
+    private DebugAssistant() {
+    }
 
     private static final String TAG = "DebugAssistant";
 
     public static void nullityCheck(Object object) {
-        if (object == null) Log.e(TAG, "nullityCheck: OBJECT WAS NULL");
-        else Log.e(TAG, "nullityCheck: OBJECT WAS NOT NULL");
+        if (object == null) Timber.d("OBJECT WAS NULL");
+        else Timber.d("OBJECT WAS NOT NULL");
     }
 
     public static void callCheck() {
@@ -18,6 +19,6 @@ public final class DebugAssistant {
     }
 
     public static void callCheck(String string) {
-        Log.e(TAG, "callCheck: " + string);
+        Timber.d("CALL CHECK %s", string);
     }
 }

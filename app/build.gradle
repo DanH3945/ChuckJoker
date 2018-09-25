@@ -39,14 +39,11 @@ dependencies {
     implementation "com.android.support:exifinterface:$rootProject.supportVersion"
     implementation "com.android.support:customtabs:$rootProject.supportVersion"
 
-    // Google play services
-    implementation "com.google.android.gms:play-services-analytics:$rootProject.googleAnalyticsVersion"
-    implementation "com.google.android.gms:play-services-ads:$rootProject.googleAdsVersion"
-
     // 3rd party libraries
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
     implementation "de.psdev.licensesdialog:licensesdialog:$rootProject.licenseDialogVersion"
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
+    implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
 
     // Room database libraries
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
