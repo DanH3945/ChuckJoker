@@ -44,6 +44,7 @@ dependencies {
     implementation "de.psdev.licensesdialog:licensesdialog:$rootProject.licenseDialogVersion"
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
     implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
 
     // Room database libraries
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"

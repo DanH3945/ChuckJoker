@@ -22,4 +22,28 @@ public class JokeItem {
 
     @ColumnInfo(name = "dateAdded")
     private Date dateAdded;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getJokeBody() {
+        return jokeBody;
+    }
+
+    public void setJokeBody(String jokeBody) {
+        this.jokeBody = jokeBody;
+    }
+
+    public Date getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(Date dateAdded) {
+        this.dateAdded = dateAdded;
+    }
 }

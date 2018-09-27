@@ -21,7 +21,7 @@ public interface JokeDao {
     long insertJoke(JokeItem jokeItem);
 
     @Delete
-    long deleteSingleJoke(JokeItem jokeItem);
+    int deleteSingleJoke(JokeItem jokeItem);
 
     @Query("DELETE FROM jokeitem")
     void deleteAllJokeItems();

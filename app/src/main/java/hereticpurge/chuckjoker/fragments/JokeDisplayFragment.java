@@ -1,5 +1,6 @@
 package hereticpurge.chuckjoker.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,12 +15,15 @@ import java.util.List;
 
 import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.model.JokeItem;
+import hereticpurge.chuckjoker.utils.NetworkUtils;
+import timber.log.Timber;
 
 public class JokeDisplayFragment extends Fragment {
 
     private List<JokeItem> jokeItemList;
+    TextView jokeBodyTextView;
 
-    public static JokeDisplayFragment createInstance(){
+    public static JokeDisplayFragment createInstance() {
         return new JokeDisplayFragment();
     }
 
@@ -32,7 +36,8 @@ public class JokeDisplayFragment extends Fragment {
         activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        TextView jokeBodyTextView = view.findViewById(R.id.joke_display_joke_body_text);
+        jokeBodyTextView = view.findViewById(R.id.joke_display_joke_body_text);
+        jokeBodyTextView.setText("Temp Text");
 
         return view;
     }
