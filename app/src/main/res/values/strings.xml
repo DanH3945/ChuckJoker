@@ -4,6 +4,7 @@
 
     // Network Strings
     <string name="network_error_string"/>
+    <string name="joke_body_error">Couldn\'t load joke</string>
 
 
 </resources>

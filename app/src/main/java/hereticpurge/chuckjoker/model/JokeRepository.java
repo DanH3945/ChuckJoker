@@ -19,9 +19,9 @@ public class JokeRepository implements LifecycleOwner{
 
     private boolean setupFinished = false;
 
-    private JokeRepository jokeRepository;
+    private static JokeRepository jokeRepository;
 
-    public JokeRepository getJokeRepository(AppCompatActivity appCompatActivity) {
+    public static JokeRepository getJokeRepository(AppCompatActivity appCompatActivity) {
         if (jokeRepository == null) {
             jokeRepository = new JokeRepository(appCompatActivity);
         }
@@ -32,7 +32,6 @@ public class JokeRepository implements LifecycleOwner{
         this.parent = parent;
         jokeViewModel = ViewModelProviders.of(parent).get(JokeViewModel.class);
         allJokesLive = jokeViewModel.getAllJokes();
-
         allJokesLive.observe(this, jokeItems -> {
             allJokes = jokeItems;
             setupFinished = true;
