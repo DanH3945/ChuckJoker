@@ -2,7 +2,6 @@ package hereticpurge.chuckjoker;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -87,12 +86,13 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     handler.post(() -> loadFragment(getJokeDisplayFragment(), false, null));
                 }
+            } else if (!mJokeRepository.isReady()) {
+                checkForNewJokes();
             }
         });
     }
 
     private void populateDatabase() {
-        showLoadingSpinner();
         Timber.d("Calling populate DB");
     }
 
