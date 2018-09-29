@@ -1,7 +1,6 @@
-package hereticpurge.chuckjoker.database;
+package hereticpurge.chuckjoker.database.converters;
 
 import android.arch.persistence.room.TypeConverter;
-import android.support.annotation.NonNull;
 
 import java.util.Date;
 

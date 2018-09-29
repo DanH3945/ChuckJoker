@@ -5,6 +5,7 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
@@ -21,14 +22,14 @@ public class JokeRepository implements LifecycleOwner{
 
     private static JokeRepository jokeRepository;
 
-    public static JokeRepository getJokeRepository(AppCompatActivity appCompatActivity) {
+    public static JokeRepository getJokeRepository(FragmentActivity fragmentActivity) {
         if (jokeRepository == null) {
-            jokeRepository = new JokeRepository(appCompatActivity);
+            jokeRepository = new JokeRepository(fragmentActivity);
         }
         return jokeRepository;
     }
 
-    private JokeRepository(AppCompatActivity parent) {
+    private JokeRepository(FragmentActivity parent) {
         this.parent = parent;
         jokeViewModel = ViewModelProviders.of(parent).get(JokeViewModel.class);
         allJokesLive = jokeViewModel.getAllJokes();

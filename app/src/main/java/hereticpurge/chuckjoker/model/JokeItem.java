@@ -8,7 +8,7 @@ import android.arch.persistence.room.TypeConverters;
 
 import java.util.Date;
 
-import hereticpurge.chuckjoker.database.DateConverter;
+import hereticpurge.chuckjoker.database.converters.DateConverter;
 
 @Entity
 @TypeConverters({DateConverter.class})
