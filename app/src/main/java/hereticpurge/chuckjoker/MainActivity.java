@@ -1,6 +1,5 @@
 package hereticpurge.chuckjoker;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -11,17 +10,13 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import java.util.Date;
-
 import hereticpurge.chuckjoker.database.DatabaseThreadManager;
 import hereticpurge.chuckjoker.fragments.JokeDisplayFragment;
 import hereticpurge.chuckjoker.gsonutils.GsonUtils;
 import hereticpurge.chuckjoker.icndb.ApiCalls;
 import hereticpurge.chuckjoker.icndb.ApiReference;
 import hereticpurge.chuckjoker.logging.TimberReleaseTree;
-import hereticpurge.chuckjoker.model.JokeItem;
 import hereticpurge.chuckjoker.model.JokeRepository;
-import hereticpurge.chuckjoker.model.JokeViewModel;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import timber.log.Timber;
@@ -33,16 +28,12 @@ public class MainActivity extends AppCompatActivity {
 
     private JokeRepository mJokeRepository;
 
-    private JokeViewModel mViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         DatabaseThreadManager.getManager().initDatabaseThread();
-
-        mViewModel = ViewModelProviders.of(this).get(JokeViewModel.class);
 
         mJokeRepository = JokeRepository.getJokeRepository(this);
 
