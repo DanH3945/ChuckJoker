@@ -1,15 +1,21 @@
 package hereticpurge.chuckjoker.database;
 
 import android.os.Handler;
-import android.os.Looper;
+import android.os.HandlerThread;
 
 public class DatabaseThreadManager {
 
-    private Thread databaseThread;
+    private static final String THREAD_NAME = "DatabaseThread";
+
+    private HandlerThread databaseThread;
     private Handler databaseHandler;
     private static DatabaseThreadManager databaseThreadManager;
 
-    private DatabaseThreadManager(){}
+    private boolean isReady = false;
+
+
+    private DatabaseThreadManager() {
+    }
 
     public static DatabaseThreadManager getManager() {
         if (databaseThreadManager == null) {
@@ -20,17 +26,20 @@ public class DatabaseThreadManager {
     }
 
     public Handler getHandler() {
-        if (databaseThread == null) {
-            databaseThread = new Thread() {
-                @Override
-                public void run() {
-                    Looper.prepare();
-                    databaseHandler = new Handler();
-                    Looper.loop();
-                }
-            };
-        }
         return databaseHandler;
+    }
+
+    public void initDatabaseThread() {
+        if (databaseThread == null) {
+            databaseThread = new HandlerThread(THREAD_NAME);
+        }
+        databaseThread.start();
+        databaseHandler = new Handler(databaseThread.getLooper());
+        isReady = true;
+    }
+
+    public boolean isReady() {
+        return isReady;
     }
 }
 

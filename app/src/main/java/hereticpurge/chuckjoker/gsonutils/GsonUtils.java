@@ -2,6 +2,7 @@ package hereticpurge.chuckjoker.gsonutils;
 
 import com.google.gson.Gson;
 
+import java.util.Date;
 import java.util.List;
 
 import hereticpurge.chuckjoker.model.JokeItem;
@@ -12,16 +13,18 @@ public final class GsonUtils {
     public static final int UNPACK_FAILED = -1;
 
     public static JokeItem unpackJoke(String jsonString) {
-        return null;
-    }
+        Gson gson = new Gson();
+        JokeItemGsonObject jokeItemGsonObject = gson.fromJson(jsonString, JokeItemGsonObject.class);
+        JokeItem jokeItem = new JokeItem();
 
-    public static List<JokeItem> unpackJokes(String jsonString) {
-        return null;
+        jokeItem.setDateAdded(new Date());
+        jokeItem.setJokeBody(jokeItemGsonObject.joke);
+        return jokeItem;
     }
 
     public static int unpackTotalJokesCount(String jsonString) {
         Gson gson = new Gson();
-        JokeTotalCountObject countObject = gson.fromJson(jsonString, JokeTotalCountObject.class);
+        JokeTotalCountGsonObject countObject = gson.fromJson(jsonString, JokeTotalCountGsonObject.class);
         int returnValue;
         try {
             returnValue = Integer.valueOf(countObject.value);
