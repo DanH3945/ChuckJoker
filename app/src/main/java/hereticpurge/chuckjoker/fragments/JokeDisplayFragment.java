@@ -10,15 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 import hereticpurge.chuckjoker.R;
-import hereticpurge.chuckjoker.model.JokeItem;
+import hereticpurge.chuckjoker.model.JokeRepository;
+import timber.log.Timber;
 
 public class JokeDisplayFragment extends Fragment {
 
-    private List<JokeItem> jokeItemList;
-    TextView jokeBodyTextView;
+    private TextView mJokeBodyTextView;
+
+    private JokeRepository mJokeRepository;
 
     public static JokeDisplayFragment createInstance() {
         return new JokeDisplayFragment();
@@ -33,8 +33,11 @@ public class JokeDisplayFragment extends Fragment {
         activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        jokeBodyTextView = view.findViewById(R.id.joke_display_joke_body_text);
-        jokeBodyTextView.setText("Temp Text");
+        mJokeBodyTextView = view.findViewById(R.id.joke_display_joke_body_text);
+
+        mJokeRepository = JokeRepository.getJokeRepository();
+
+        setJokeBodyTextViewText(JokeRepository.getJokeRepository().getAllJokes().get(57).getJokeBody());
 
         return view;
     }
@@ -42,10 +45,10 @@ public class JokeDisplayFragment extends Fragment {
     private boolean setJokeBodyTextViewText(String jokeString) {
         // Boolean return values here just in case they are needed later.
         if (jokeString != null && !jokeString.equals("")) {
-            jokeBodyTextView.setText(jokeString);
+            mJokeBodyTextView.setText(jokeString);
             return true;
         }
-        jokeBodyTextView.setText(getActivity().getResources().getString(R.string.joke_body_error));
+        mJokeBodyTextView.setText(getActivity().getResources().getString(R.string.joke_body_error));
         return false;
     }
 }

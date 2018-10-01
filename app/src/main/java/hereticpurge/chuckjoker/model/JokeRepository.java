@@ -5,12 +5,12 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
 
-public class JokeRepository implements LifecycleOwner{
+public class JokeRepository implements LifecycleOwner {
 
     private LifecycleOwner parent;
 
@@ -22,11 +22,20 @@ public class JokeRepository implements LifecycleOwner{
 
     private static JokeRepository jokeRepository;
 
-    public static JokeRepository getJokeRepository(FragmentActivity fragmentActivity) {
+    public static JokeRepository initRepository(FragmentActivity fragmentActivity) {
         if (jokeRepository == null) {
             jokeRepository = new JokeRepository(fragmentActivity);
         }
         return jokeRepository;
+    }
+
+    public static @Nullable
+    JokeRepository getJokeRepository() {
+        if (jokeRepository != null) {
+            return jokeRepository;
+        } else {
+            return null;
+        }
     }
 
     private JokeRepository(FragmentActivity parent) {

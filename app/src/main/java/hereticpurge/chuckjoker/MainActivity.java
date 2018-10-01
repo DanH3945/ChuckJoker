@@ -1,5 +1,6 @@
 package hereticpurge.chuckjoker;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,9 @@ import hereticpurge.chuckjoker.gsonutils.GsonUtils;
 import hereticpurge.chuckjoker.icndb.ApiCalls;
 import hereticpurge.chuckjoker.icndb.ApiReference;
 import hereticpurge.chuckjoker.logging.TimberReleaseTree;
+import hereticpurge.chuckjoker.model.JokeItem;
 import hereticpurge.chuckjoker.model.JokeRepository;
+import hereticpurge.chuckjoker.model.JokeViewModel;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import timber.log.Timber;
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     private JokeRepository mJokeRepository;
 
+    private JokeViewModel mViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseThreadManager.getManager().initDatabaseThread();
 
-        mJokeRepository = JokeRepository.getJokeRepository(this);
+        mJokeRepository = JokeRepository.initRepository(this);
+
+        mViewModel = ViewModelProviders.of(this).get(JokeViewModel.class);
 
         if (BuildConfig.DEBUG) {
             // Timber debug tree
@@ -88,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     handler.post(() -> populateDatabase(numJokesAvailable));
                 } else {
                     handler.post(() -> loadFragment(getJokeDisplayFragment(), false, null));
+                    Timber.d("Jokes on Api: %s, Jokes in Database: %s", numJokesAvailable, mJokeRepository.getAllJokes().size());
                 }
             } else if (!mJokeRepository.isReady()) {
                 checkForNewJokes();
@@ -98,6 +106,15 @@ public class MainActivity extends AppCompatActivity {
     private void populateDatabase(int numJokes) {
         while (!DatabaseThreadManager.getManager().isReady()) {
             // Just waiting on the ThreadManager
+        }
+
+        OkHttpClient client = new OkHttpClient();
+        for (int i = 1; i < numJokes; i++) {
+            HttpUrl url = HttpUrl.parse(ApiReference.SINGLE_JOKE_URL + i);
+            ApiCalls.GET(client, url, (responseCode, s) -> {
+                JokeItem jokeItem = GsonUtils.unpackJoke(s);
+                mViewModel.insertJoke(jokeItem);
+            });
         }
     }
 
