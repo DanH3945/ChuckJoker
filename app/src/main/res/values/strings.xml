@@ -5,6 +5,8 @@
     // Network Strings
     <string name="network_error_string"/>
     <string name="joke_body_error">Couldn\'t load joke</string>
+    <string name="debug_wipe_database">Debug Wipe Database</string>
+    <string name="debug_add_debug_joke">Debug add debug joke</string>
 
 
 </resources>

@@ -37,8 +37,6 @@ public class JokeDisplayFragment extends Fragment {
 
         mJokeRepository = JokeRepository.getJokeRepository();
 
-        setJokeBodyTextViewText(JokeRepository.getJokeRepository().getAllJokes().get(57).getJokeBody());
-
         return view;
     }
 

@@ -7,9 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+
+import java.util.Date;
 
 import hereticpurge.chuckjoker.database.DatabaseThreadManager;
 import hereticpurge.chuckjoker.fragments.JokeDisplayFragment;
@@ -107,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
         while (!DatabaseThreadManager.getManager().isReady()) {
             // Just waiting on the ThreadManager
         }
+        // For now we're wiping the database each time we need to add new jokes.
+        // Horribly inefficient.  Fix me later.
+        mViewModel.deleteAllJokes();
 
         OkHttpClient client = new OkHttpClient();
         for (int i = 1; i < numJokes; i++) {
@@ -116,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 mViewModel.insertJoke(jokeItem);
             });
         }
+        loadFragment(getJokeDisplayFragment(), false, null);
     }
 
     private void showLoadingSpinner() {
@@ -126,5 +134,27 @@ public class MainActivity extends AppCompatActivity {
     private void hideLoadingSpinner() {
         mFragmentContainer.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.overflow_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.overflow_menu_wipe_database:
+                mViewModel.deleteAllJokes();
+                break;
+
+            case R.id.overflow_menu_debug_add_joke:
+                JokeItem jokeItem = new JokeItem();
+                jokeItem.setDateAdded(new Date());
+                jokeItem.setJokeBody("Funny stuff here");
+                mViewModel.insertJoke(jokeItem);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

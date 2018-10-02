@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentActivity;
 
 import java.util.List;
 
+import timber.log.Timber;
+
 public class JokeRepository implements LifecycleOwner {
 
     private LifecycleOwner parent;
@@ -31,11 +33,7 @@ public class JokeRepository implements LifecycleOwner {
 
     public static @Nullable
     JokeRepository getJokeRepository() {
-        if (jokeRepository != null) {
-            return jokeRepository;
-        } else {
-            return null;
-        }
+        return jokeRepository;
     }
 
     private JokeRepository(FragmentActivity parent) {
@@ -43,6 +41,7 @@ public class JokeRepository implements LifecycleOwner {
         jokeViewModel = ViewModelProviders.of(parent).get(JokeViewModel.class);
         allJokesLive = jokeViewModel.getAllJokes();
         allJokesLive.observe(this, jokeItems -> {
+            Timber.i("Joke Repo Building - Count is: %s", jokeItems.size());
             allJokes = jokeItems;
             setupFinished = true;
         });
