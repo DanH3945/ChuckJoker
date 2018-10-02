@@ -14,7 +14,7 @@ import hereticpurge.chuckjoker.database.converters.DateConverter;
 @TypeConverters({DateConverter.class})
 public class JokeItem {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey()
     private int id;
 
     @ColumnInfo(name = "jokeBody")

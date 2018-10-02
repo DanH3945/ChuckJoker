@@ -120,7 +120,9 @@ public class MainActivity extends AppCompatActivity {
             HttpUrl url = HttpUrl.parse(ApiReference.SINGLE_JOKE_URL + i);
             ApiCalls.GET(client, url, (responseCode, s) -> {
                 JokeItem jokeItem = GsonUtils.unpackJoke(s);
-                mViewModel.insertJoke(jokeItem);
+                if (jokeItem != null){
+                    mViewModel.insertJoke(jokeItem);
+                }
             });
         }
         loadFragment(getJokeDisplayFragment(), false, null);
