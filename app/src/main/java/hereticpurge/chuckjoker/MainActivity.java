@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         showLoadingSpinner();
 
         if (savedInstanceState == null) {
-            checkForNewJokes();
+            loadFragment(getJokeDisplayFragment(), false, null);
         }
     }
 
@@ -94,11 +94,10 @@ public class MainActivity extends AppCompatActivity {
         ApiCalls.GET(client, url, (responseCode, s) -> {
             if (s != null && mJokeRepository.isReady()) {
                 int numJokesAvailable = GsonUtils.unpackTotalJokesCount(s);
-                Handler handler = new Handler(this.getMainLooper());
                 if (numJokesAvailable > mJokeRepository.getAllJokes().size()) {
+                    Handler handler = new Handler(this.getMainLooper());
                     handler.post(() -> populateDatabase(numJokesAvailable));
                 } else {
-                    handler.post(() -> loadFragment(getJokeDisplayFragment(), false, null));
                     Timber.d("Jokes on Api: %s, Jokes in Database: %s", numJokesAvailable, mJokeRepository.getAllJokes().size());
                 }
             } else if (!mJokeRepository.isReady()) {
@@ -125,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        loadFragment(getJokeDisplayFragment(), false, null);
     }
 
     private void showLoadingSpinner() {

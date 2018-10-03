@@ -17,8 +17,6 @@ public final class GsonUtils {
 
     public static final int UNPACK_FAILED = -1;
 
-    public static final String SUCCESS = "success";
-
     public static @Nullable JokeItem unpackJoke(String jsonString) {
         try {
             JSONObject baseObject = new JSONObject(jsonString);
