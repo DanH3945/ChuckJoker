@@ -1,6 +1,7 @@
 package hereticpurge.chuckjoker.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,9 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
+import java.util.stream.IntStream;
+
 import hereticpurge.chuckjoker.R;
+import hereticpurge.chuckjoker.model.JokeItem;
 import hereticpurge.chuckjoker.model.JokeRepository;
 import timber.log.Timber;
 
@@ -19,6 +25,8 @@ public class JokeDisplayFragment extends Fragment {
     private TextView mJokeBodyTextView;
 
     private JokeRepository mJokeRepository;
+
+    private Button mRandomJokeButton;
 
     public static JokeDisplayFragment createInstance() {
         return new JokeDisplayFragment();
@@ -36,6 +44,14 @@ public class JokeDisplayFragment extends Fragment {
         mJokeBodyTextView = view.findViewById(R.id.joke_display_joke_body_text);
 
         mJokeRepository = JokeRepository.getJokeRepository();
+
+        mRandomJokeButton = view.findViewById(R.id.joke_display_fragment_random_joke_button);
+        mRandomJokeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<JokeItem> jokeItemList = mJokeRepository.getAllJokes();
+            }
+        });
 
         return view;
     }

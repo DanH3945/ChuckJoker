@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         hideLoadingSpinner();
     }
 
-    private void checkForNewJokes() {
+    public void checkForNewJokes(View view) {
         OkHttpClient client = new OkHttpClient();
         HttpUrl url = HttpUrl.get(ApiReference.ALL_JOKES_COUNT_URL);
         ApiCalls.GET(client, url, (responseCode, s) -> {
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     Timber.d("Jokes on Api: %s, Jokes in Database: %s", numJokesAvailable, mJokeRepository.getAllJokes().size());
                 }
             } else if (!mJokeRepository.isReady()) {
-                checkForNewJokes();
+                checkForNewJokes(view);
             }
         });
     }
