@@ -4,14 +4,37 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <Button
+        android:id="@+id/joke_display_fragment_random_joke_button"
+        android:layout_width="@dimen/joke_display_fragment_button_width"
+        android:layout_height="@dimen/joke_display_fragment_button_height"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/joke_display_fragment_check_new_jokes_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="@dimen/joke_display_fragment_button_margin"
+        android:text="@string/joke_display_fragment_random_button_text"
+        android:textSize="@dimen/joke_display_fragment_button_text_size"/>
+
+    <Button
+        android:id="@+id/joke_display_fragment_check_new_jokes_button"
+        android:layout_width="@dimen/joke_display_fragment_button_width"
+        android:layout_height="@dimen/joke_display_fragment_button_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/joke_display_fragment_random_joke_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="@dimen/joke_display_fragment_button_margin"
+        android:text="@string/joke_display_fragment_check_new_button_text"
+        android:textSize="@dimen/joke_display_fragment_button_text_size"/>
+
     <TextView
         android:id="@+id/joke_display_joke_body_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/joke_display_fragment_random_joke_button"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/error_joke_display_fragment_load_error_text"/>
+        android:text="@string/joke_display_fragment_joke_body_default_text"
+        android:gravity="center"/>
 
 </android.support.constraint.ConstraintLayout>
