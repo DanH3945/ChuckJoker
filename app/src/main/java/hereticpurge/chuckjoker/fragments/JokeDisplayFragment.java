@@ -46,11 +46,8 @@ public class JokeDisplayFragment extends Fragment {
         mJokeRepository = JokeRepository.getJokeRepository();
 
         mRandomJokeButton = view.findViewById(R.id.joke_display_fragment_random_joke_button);
-        mRandomJokeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<JokeItem> jokeItemList = mJokeRepository.getAllJokes();
-            }
+        mRandomJokeButton.setOnClickListener(v -> {
+            List<JokeItem> jokeItemList = mJokeRepository.getAllJokes();
         });
 
         return view;
