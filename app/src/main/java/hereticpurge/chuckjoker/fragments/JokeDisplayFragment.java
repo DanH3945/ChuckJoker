@@ -1,7 +1,6 @@
 package hereticpurge.chuckjoker.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,13 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.List;
-import java.util.stream.IntStream;
+import java.util.concurrent.ThreadLocalRandom;
 
 import hereticpurge.chuckjoker.R;
-import hereticpurge.chuckjoker.model.JokeItem;
 import hereticpurge.chuckjoker.model.JokeRepository;
-import timber.log.Timber;
 
 public class JokeDisplayFragment extends Fragment {
 
@@ -27,6 +23,8 @@ public class JokeDisplayFragment extends Fragment {
     private JokeRepository mJokeRepository;
 
     private Button mRandomJokeButton;
+
+    private int mCurrentDisplayIndex;
 
     public static JokeDisplayFragment createInstance() {
         return new JokeDisplayFragment();
@@ -47,13 +45,15 @@ public class JokeDisplayFragment extends Fragment {
 
         mRandomJokeButton = view.findViewById(R.id.joke_display_fragment_random_joke_button);
         mRandomJokeButton.setOnClickListener(v -> {
-            List<JokeItem> jokeItemList = mJokeRepository.getAllJokes();
+            mCurrentDisplayIndex = ThreadLocalRandom.current().nextInt(0, mJokeRepository.getAllJokes().size());
+            showJoke();
         });
 
         return view;
     }
 
-    private boolean setJokeBodyTextViewText(String jokeString) {
+    private boolean showJoke() {
+        String jokeString = mJokeRepository.getAllJokes().get(mCurrentDisplayIndex).getJokeBody();
         // Boolean return values here just in case they are needed later.
         if (jokeString != null && !jokeString.equals("")) {
             mJokeBodyTextView.setText(jokeString);
