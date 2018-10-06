@@ -1,6 +1,7 @@
 package hereticpurge.chuckjoker.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,9 @@ import android.widget.TextView;
 import java.util.concurrent.ThreadLocalRandom;
 
 import hereticpurge.chuckjoker.R;
+import hereticpurge.chuckjoker.database.DatabaseThreadManager;
 import hereticpurge.chuckjoker.model.JokeRepository;
+import timber.log.Timber;
 
 public class JokeDisplayFragment extends Fragment {
 
@@ -26,6 +29,10 @@ public class JokeDisplayFragment extends Fragment {
 
     private int mCurrentDisplayIndex;
 
+    private int DEFAULT_INDEX = 1;
+
+    private String INDEX_SAVE_KEY = "indexSaveKey";
+
     public static JokeDisplayFragment createInstance() {
         return new JokeDisplayFragment();
     }
@@ -34,6 +41,16 @@ public class JokeDisplayFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.joke_display_fragment_layout, container, false);
+
+        mCurrentDisplayIndex = DEFAULT_INDEX;
+        try {
+            if (savedInstanceState != null) {
+                mCurrentDisplayIndex = savedInstanceState.getInt(INDEX_SAVE_KEY);
+            }
+        } catch (NullPointerException e) {
+            // Error loading the save state so we log and do nothing while letting the default state load
+            Timber.d("NullPointerException while loading saved instance state");
+        }
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -49,11 +66,47 @@ public class JokeDisplayFragment extends Fragment {
             showJoke();
         });
 
+        // All done with the setup.  Load the first joke as soon as the repository is ready.
+        // Here we're putting the call to sleep until the repo is ready into a runnable and sending
+        // it off onto our second thread (in this case the database thread since it's easily accessible
+        // and creating another thread just for this one call is a bit excessive.
+        DatabaseThreadManager.getManager().getHandler().post(new Runnable() {
+            @Override
+            public void run() {
+                while (!mJokeRepository.isReady()) {
+                    try {
+                        Thread.sleep(250);
+                    } catch (InterruptedException e) {
+                        // Do nothing since we're just waiting for the repo to be ready.
+                    }
+                }
+
+                // The repo is now ready so we get the main Thread's handler and push the call
+                // to show back onto the main thread so we can manipulate views.
+                Handler handler = new Handler(getActivity().getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        showJoke();
+                    }
+                });
+            }
+        });
+
         return view;
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt(INDEX_SAVE_KEY, mCurrentDisplayIndex);
+        super.onSaveInstanceState(outState);
+    }
+
     private boolean showJoke() {
-        String jokeString = mJokeRepository.getAllJokes().get(mCurrentDisplayIndex).getJokeBody();
+        String jokeString = null;
+        if (mJokeRepository.getAllJokes().size() > 0) {
+            jokeString = mJokeRepository.getAllJokes().get(mCurrentDisplayIndex).getJokeBody();
+        }
         // Boolean return values here just in case they are needed later.
         if (jokeString != null && !jokeString.equals("")) {
             mJokeBodyTextView.setText(jokeString);
