@@ -16,6 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.database.DatabaseThreadManager;
+import hereticpurge.chuckjoker.logging.DebugAssistant;
 import hereticpurge.chuckjoker.model.JokeRepository;
 import timber.log.Timber;
 
@@ -42,15 +43,9 @@ public class JokeDisplayFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.joke_display_fragment_layout, container, false);
 
+        this.setRetainInstance(true);
+
         mCurrentDisplayIndex = DEFAULT_INDEX;
-        try {
-            if (savedInstanceState != null) {
-                mCurrentDisplayIndex = savedInstanceState.getInt(INDEX_SAVE_KEY);
-            }
-        } catch (NullPointerException e) {
-            // Error loading the save state so we log and do nothing while letting the default state load
-            Timber.d("NullPointerException while loading saved instance state");
-        }
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -97,9 +92,25 @@ public class JokeDisplayFragment extends Fragment {
     }
 
     @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        DebugAssistant.nullityCheck(savedInstanceState);
+        try {
+            if (savedInstanceState != null) {
+                DebugAssistant.callCheck();
+                mCurrentDisplayIndex = savedInstanceState.getInt(INDEX_SAVE_KEY);
+            }
+        } catch (NullPointerException e) {
+            // Error loading the save state so we log and do nothing while letting the default state load
+            Timber.d("NullPointerException while loading saved instance state");
+        }
+    }
+
+    @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putInt(INDEX_SAVE_KEY, mCurrentDisplayIndex);
         super.onSaveInstanceState(outState);
+        outState.putInt(INDEX_SAVE_KEY, mCurrentDisplayIndex);
     }
 
     private boolean showJoke() {

@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DatabaseThreadManager.getManager().initDatabaseThread();
-
         mJokeRepository = JokeRepository.initRepository(this);
 
         mViewModel = ViewModelProviders.of(this).get(JokeViewModel.class);
@@ -63,7 +61,21 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             loadFragment(getJokeDisplayFragment(), false, null);
+        } else {
+            hideLoadingSpinner();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        DatabaseThreadManager.getManager().initDatabaseThread();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        DatabaseThreadManager.getManager().stopThread();
+        super.onStop();
     }
 
     @Override

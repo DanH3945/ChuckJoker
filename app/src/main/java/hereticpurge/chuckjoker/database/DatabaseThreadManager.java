@@ -44,6 +44,9 @@ public class DatabaseThreadManager {
 
     public void stopThread() {
         databaseThread.quitSafely();
+        databaseThread = null;
+        databaseHandler = null;
+        isReady = false;
     }
 }
 
