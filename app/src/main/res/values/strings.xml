@@ -16,5 +16,8 @@
     <string name="joke_display_fragment_check_new_button_text">Check for new jokes</string>
     <string name="joke_display_fragment_random_button_text">Get a random joke</string>
 
+    // Ad Strings
+    <string name="ads_test_banner_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
 
 </resources>

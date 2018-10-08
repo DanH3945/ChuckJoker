@@ -13,6 +13,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.Date;
 
 import hereticpurge.chuckjoker.database.DatabaseThreadManager;
@@ -64,6 +67,20 @@ public class MainActivity extends AppCompatActivity {
         } else {
             hideLoadingSpinner();
         }
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        AdView mAdView = findViewById(R.id.included_ad_view);
+        mAdView.loadAd(adRequest);
+
+        // Fix for ad view dropping the frame rate of the app. Credit to Martin on stackoverflow.com
+        // for giving me the idea to switch the layer type.  My solution is somewhat simpler.  Just
+        // change the layer type for the entire view since i'm only trying to load test ads on a demo.
+        // https://stackoverflow.com/questions/9366365/android-admob-admob-ad-refresh-destroys-frame-rate
+        mAdView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+
     }
 
     @Override
