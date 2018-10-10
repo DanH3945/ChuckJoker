@@ -19,6 +19,7 @@ import com.google.android.gms.ads.AdView;
 import java.util.Date;
 
 import hereticpurge.chuckjoker.database.DatabaseThreadManager;
+import hereticpurge.chuckjoker.fragments.AboutDialogFragment;
 import hereticpurge.chuckjoker.fragments.JokeDisplayFragment;
 import hereticpurge.chuckjoker.gsonutils.GsonUtils;
 import hereticpurge.chuckjoker.icndb.ApiCalls;
@@ -183,6 +184,10 @@ public class MainActivity extends AppCompatActivity {
                 jokeItem.setDateAdded(new Date());
                 jokeItem.setJokeBody("Funny stuff here");
                 mViewModel.insertJoke(jokeItem);
+
+            case R.id.overflow_menu_about:
+                new AboutDialogFragment().show(getSupportFragmentManager(), null);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
