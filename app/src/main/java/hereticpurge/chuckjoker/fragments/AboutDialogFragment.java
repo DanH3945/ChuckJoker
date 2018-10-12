@@ -43,4 +43,24 @@ public class AboutDialogFragment extends AppCompatDialogFragment {
 
         return dialog;
     }
+
+    private void showGsonLicense() {
+
+    }
+
+    private void showLicesneDialogLicense() {
+
+    }
+
+    private void showPicassoLicense() {
+
+    }
+
+    private void showTimberLicense() {
+
+    }
+
+    private void showOkhttpLicense() {
+
+    }
 }

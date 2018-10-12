@@ -23,6 +23,11 @@
     // About Dialog Strings
     <string name="about_title">Chuck Joker</string>
     <string name="about_version">"Version:   "</string>
+    <string name="about_gson_license_title">Gson License</string>
+    <string name="about_license_dialog_title">License Dialog License</string>
+    <string name="about_picasso_license_title">Picasso License</string>
+    <string name="about_timber_license_title">Timber License</string>
+    <string name="about_okhttp_license_title">OkHttp License</string>
 
 
 </resources>
