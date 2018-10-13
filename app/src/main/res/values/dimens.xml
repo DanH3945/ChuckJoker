@@ -6,4 +6,8 @@
     <dimen name="joke_display_fragment_button_margin">16dp</dimen>
     <dimen name="joke_display_fragment_button_text_size">12sp</dimen>
 
+    // About Fragment Dimensions
+    <dimen name="about_item_height">32dp</dimen>
+    <dimen name="about_item_margin">8dp</dimen>
+
 </resources>

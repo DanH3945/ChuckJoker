@@ -28,6 +28,7 @@
     <string name="about_picasso_license_title">Picasso License</string>
     <string name="about_timber_license_title">Timber License</string>
     <string name="about_okhttp_license_title">OkHttp License</string>
+    <string name="about_third_party_licenses">Third Party Licenses</string>
 
 
 </resources>

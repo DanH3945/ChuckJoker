@@ -31,8 +31,10 @@ public final class ApiCalls {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                // This represents an IO failure of some kind and not just a failure to get a
+                // response from a server.
                 Timber.d("OkHttp Callback onFailure");
-                e.printStackTrace();
+                Timber.e(e);
             }
 
             @Override

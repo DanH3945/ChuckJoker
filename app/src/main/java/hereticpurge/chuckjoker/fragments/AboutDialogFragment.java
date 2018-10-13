@@ -41,6 +41,21 @@ public class AboutDialogFragment extends AppCompatDialogFragment {
             Timber.d("onCreateDialog: Failed to get package name");
         }
 
+        TextView gsonText = getView().findViewById(R.id.about_gson_tv);
+        gsonText.setOnClickListener(v -> showGsonLicense());
+
+        TextView licenseDialogText = getView().findViewById(R.id.about_license_dialog_tv);
+        licenseDialogText.setOnClickListener(v -> showLicenseDialogLicense());
+
+        TextView picassoText = getView().findViewById(R.id.about_picasso_tv);
+        picassoText.setOnClickListener(v -> showPicassoLicense());
+
+        TextView timberText = getView().findViewById(R.id.about_timber_tv);
+        timberText.setOnClickListener(v -> showTimberLicense());
+
+        TextView okhttpText = getView().findViewById(R.id.about_okhttp_tv);
+        okhttpText.setOnClickListener(v -> showOkhttpLicense());
+
         return dialog;
     }
 
@@ -48,7 +63,7 @@ public class AboutDialogFragment extends AppCompatDialogFragment {
 
     }
 
-    private void showLicesneDialogLicense() {
+    private void showLicenseDialogLicense() {
 
     }
 
