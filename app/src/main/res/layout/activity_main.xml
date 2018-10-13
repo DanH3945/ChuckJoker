@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             ads:adSize="BANNER"
             ads:adUnitId="@string/ads_test_banner_unit_id"
-            android:layout_gravity="top|center"/>
+            android:layout_gravity="top|center" />
 
     </FrameLayout>
 
