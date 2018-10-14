@@ -1,12 +1,17 @@
 package hereticpurge.chuckjoker.fragments;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.view.ContextThemeWrapper;
 import android.widget.TextView;
 
+import de.psdev.licensesdialog.LicensesDialog;
+import de.psdev.licensesdialog.licenses.ApacheSoftwareLicense20;
+import de.psdev.licensesdialog.licenses.License;
+import de.psdev.licensesdialog.model.Notice;
 import hereticpurge.chuckjoker.R;
 import timber.log.Timber;
 
@@ -68,7 +73,13 @@ public class AboutDialogFragment extends AppCompatDialogFragment {
     }
 
     private void showPicassoLicense() {
-
+        Context context = getContext();
+        final String name = context.getResources().getString(R.string.about_picasso_license_title);
+        final String url = context.getResources().getString(R.string.about_picasso_url);
+        final String copyright = context.getResources().getString(R.string.about_picasso_copyright);
+        final License license = new ApacheSoftwareLicense20();
+        final Notice notice = new Notice(name, url, copyright, license);
+        new LicensesDialog.Builder(context).setNotices(notice).build().showAppCompat();
     }
 
     private void showTimberLicense() {

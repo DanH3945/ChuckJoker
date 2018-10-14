@@ -24,11 +24,27 @@
     <string name="about_title">Chuck Joker</string>
     <string name="about_version">"Version:   "</string>
     <string name="about_gson_license_title">Gson License</string>
-    <string name="about_license_dialog_title">License Dialog License</string>
+    <string name="about_gson_url"></string>
+    <string name="about_gson_copyright"></string>
+
+    <string name="about_license_dialog_title">"PSDev's License Dialog"</string>
+    <string name="about_license_dialog_url">http://github.psdev.de/LicensesDialog/</string>
+    <string name="about_license_dialog_copyright">Copyright 2013 Philip Schiffer</string>
+
     <string name="about_picasso_license_title">Picasso License</string>
+    <string name="about_picasso_url">https://square.github.io/picasso/</string>
+    <string name="about_picasso_copyright">Copyright 2013 Square, Inc.</string>
+
     <string name="about_timber_license_title">Timber License</string>
+    <string name="about_timber_url"></string>
+    <string name="about_timber_copyright"></string>
+
     <string name="about_okhttp_license_title">OkHttp License</string>
+    <string name="about_okhttp_url"></string>
+    <string name="about_okhttp_copyright"></string>
+
     <string name="about_third_party_licenses">Third Party Licenses</string>
+
 
 
 </resources>
