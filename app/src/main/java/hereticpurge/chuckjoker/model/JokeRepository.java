@@ -31,11 +31,6 @@ public class JokeRepository implements LifecycleOwner {
         return jokeRepository;
     }
 
-    public static @Nullable
-    JokeRepository getJokeRepository() {
-        return jokeRepository;
-    }
-
     private JokeRepository(FragmentActivity parent) {
         this.parent = parent;
         jokeViewModel = ViewModelProviders.of(parent).get(JokeViewModel.class);
@@ -45,6 +40,15 @@ public class JokeRepository implements LifecycleOwner {
             allJokes = jokeItems;
             setupFinished = true;
         });
+    }
+
+    public static void clearRepository() {
+        jokeRepository = null;
+    }
+
+    public static @Nullable
+    JokeRepository getJokeRepository() {
+        return jokeRepository;
     }
 
     @NonNull

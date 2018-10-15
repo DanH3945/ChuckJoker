@@ -1,6 +1,7 @@
 package hereticpurge.chuckjoker.fragments;
 
 import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -13,17 +14,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.database.DatabaseThreadManager;
 import hereticpurge.chuckjoker.logging.DebugAssistant;
+import hereticpurge.chuckjoker.model.JokeItem;
 import hereticpurge.chuckjoker.model.JokeRepository;
 import timber.log.Timber;
 
 public class JokeDisplayFragment extends Fragment {
 
     private TextView mJokeBodyTextView;
+    private TextView mJokeCountTextView;
 
     private JokeRepository mJokeRepository;
 
@@ -53,6 +57,7 @@ public class JokeDisplayFragment extends Fragment {
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mJokeBodyTextView = view.findViewById(R.id.joke_display_joke_body_text);
+        mJokeCountTextView = view.findViewById(R.id.joke_display_joke_count);
 
         mJokeRepository = JokeRepository.getJokeRepository();
 
@@ -83,6 +88,7 @@ public class JokeDisplayFragment extends Fragment {
                 handler.post(() -> {
                     if (JokeDisplayFragment.this.getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         showJoke();
+                        bindJokeCount();
                     }
                 });
             }
@@ -122,5 +128,13 @@ public class JokeDisplayFragment extends Fragment {
         }
         mJokeBodyTextView.setText(getActivity().getResources().getString(R.string.joke_body_error));
         return false;
+    }
+
+    private void bindJokeCount() {
+        mJokeRepository.getAllJokesLive().observe(this, jokeItems -> {
+            if (jokeItems != null) {
+                mJokeCountTextView.setText(Integer.toString(jokeItems.size()));
+            }
+        });
     }
 }

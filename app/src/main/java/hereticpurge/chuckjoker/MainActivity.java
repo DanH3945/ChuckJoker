@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         mJokeRepository = JokeRepository.initRepository(this);
 
-        mViewModel = ViewModelProviders.of(this).get(JokeViewModel.class);
-
         if (BuildConfig.DEBUG) {
             // Timber debug tree
             Timber.plant(new Timber.DebugTree());
@@ -89,13 +87,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        DatabaseThreadManager.getManager().initDatabaseThread();
+        mJokeRepository = JokeRepository.initRepository(this);
+        mViewModel = ViewModelProviders.of(this).get(JokeViewModel.class);
         super.onStart();
     }
 
     @Override
     protected void onStop() {
-        DatabaseThreadManager.getManager().stopThread();
+        JokeRepository.clearRepository();
         super.onStop();
     }
 
@@ -154,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
             ApiCalls.GET(client, url, (responseCode, s) -> {
                 JokeItem jokeItem = GsonUtils.unpackJoke(s);
                 if (jokeItem != null){
+                    Timber.d("Inserting joke");
                     mViewModel.insertJoke(jokeItem);
                 }
             });
