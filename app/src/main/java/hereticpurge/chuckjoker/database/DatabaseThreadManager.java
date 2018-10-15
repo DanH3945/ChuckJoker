@@ -3,6 +3,8 @@ package hereticpurge.chuckjoker.database;
 import android.os.Handler;
 import android.os.HandlerThread;
 
+import timber.log.Timber;
+
 public class DatabaseThreadManager {
 
     private static final String THREAD_NAME = "DatabaseThread";
@@ -32,10 +34,10 @@ public class DatabaseThreadManager {
     public void initDatabaseThread() {
         if (databaseThread == null) {
             databaseThread = new HandlerThread(THREAD_NAME);
+            databaseThread.start();
+            databaseHandler = new Handler(databaseThread.getLooper());
+            databaseHandler.post(() -> isReady = true);
         }
-        databaseThread.start();
-        databaseHandler = new Handler(databaseThread.getLooper());
-        isReady = true;
     }
 
     public boolean isReady() {

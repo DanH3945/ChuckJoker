@@ -1,5 +1,6 @@
 package hereticpurge.chuckjoker;
 
+import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.os.Handler;
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        DatabaseThreadManager.getManager().initDatabaseThread();
 
         mJokeRepository = JokeRepository.initRepository(this);
 
@@ -124,7 +127,8 @@ public class MainActivity extends AppCompatActivity {
         ApiCalls.GET(client, url, (responseCode, s) -> {
             if (s != null && mJokeRepository.isReady()) {
                 int numJokesAvailable = GsonUtils.unpackTotalJokesCount(s);
-                if (numJokesAvailable > mJokeRepository.getAllJokes().size()) {
+                if (numJokesAvailable > mJokeRepository.getAllJokes().size() &&
+                        MainActivity.this.getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                     Handler handler = new Handler(this.getMainLooper());
                     handler.post(() -> populateDatabase(numJokesAvailable));
                 } else {

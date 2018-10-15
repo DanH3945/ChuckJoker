@@ -1,5 +1,6 @@
 package hereticpurge.chuckjoker.fragments;
 
+import android.arch.lifecycle.Lifecycle;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -79,9 +80,8 @@ public class JokeDisplayFragment extends Fragment {
                 // The repo is now ready so we get the main Thread's handler and push the call
                 // to show back onto the main thread so we can manipulate views.
                 Handler handler = new Handler(getActivity().getMainLooper());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
+                handler.post(() -> {
+                    if (JokeDisplayFragment.this.getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                         showJoke();
                     }
                 });
@@ -94,11 +94,8 @@ public class JokeDisplayFragment extends Fragment {
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-
-        DebugAssistant.nullityCheck(savedInstanceState);
         try {
             if (savedInstanceState != null) {
-                DebugAssistant.callCheck();
                 mCurrentDisplayIndex = savedInstanceState.getInt(INDEX_SAVE_KEY);
             }
         } catch (NullPointerException e) {
