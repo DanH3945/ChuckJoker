@@ -46,29 +46,43 @@ public class AboutDialogFragment extends AppCompatDialogFragment {
             Timber.d("onCreateDialog: Failed to get package name");
         }
 
-        TextView gsonText = getView().findViewById(R.id.about_gson_tv);
+        TextView gsonText = dialog.findViewById(R.id.about_gson_tv);
         gsonText.setOnClickListener(v -> showGsonLicense());
 
-        TextView licenseDialogText = getView().findViewById(R.id.about_license_dialog_tv);
+        TextView licenseDialogText = dialog.findViewById(R.id.about_license_dialog_tv);
         licenseDialogText.setOnClickListener(v -> showLicenseDialogLicense());
 
-        TextView picassoText = getView().findViewById(R.id.about_picasso_tv);
+        TextView picassoText = dialog.findViewById(R.id.about_picasso_tv);
         picassoText.setOnClickListener(v -> showPicassoLicense());
 
-        TextView timberText = getView().findViewById(R.id.about_timber_tv);
+        TextView timberText = dialog.findViewById(R.id.about_timber_tv);
         timberText.setOnClickListener(v -> showTimberLicense());
 
-        TextView okhttpText = getView().findViewById(R.id.about_okhttp_tv);
+        TextView okhttpText = dialog.findViewById(R.id.about_okhttp_tv);
         okhttpText.setOnClickListener(v -> showOkhttpLicense());
 
         return dialog;
     }
 
     private void showGsonLicense() {
+        Context context = getContext();
+        final String name = context.getResources().getString(R.string.about_gson_license_title);
+        final String url = context.getResources().getString(R.string.about_gson_url);
+        final String copyright = context.getResources().getString(R.string.about_gson_copyright);
+        final License license = new ApacheSoftwareLicense20();
+        final Notice notice = new Notice(name, url, copyright, license);
+        new LicensesDialog.Builder(context).setNotices(notice).build().showAppCompat();
 
     }
 
     private void showLicenseDialogLicense() {
+        Context context = getContext();
+        final String name = context.getResources().getString(R.string.about_license_dialog_title);
+        final String url = context.getResources().getString(R.string.about_license_dialog_url);
+        final String copyright = context.getResources().getString(R.string.about_license_dialog_copyright);
+        final License license = new ApacheSoftwareLicense20();
+        final Notice notice = new Notice(name, url, copyright, license);
+        new LicensesDialog.Builder(context).setNotices(notice).build().showAppCompat();
 
     }
 
@@ -83,10 +97,24 @@ public class AboutDialogFragment extends AppCompatDialogFragment {
     }
 
     private void showTimberLicense() {
+        Context context = getContext();
+        final String name = context.getResources().getString(R.string.about_timber_license_title);
+        final String url = context.getResources().getString(R.string.about_timber_url);
+        final String copyright = context.getResources().getString(R.string.about_timber_copyright);
+        final License license = new ApacheSoftwareLicense20();
+        final Notice notice = new Notice(name, url, copyright, license);
+        new LicensesDialog.Builder(context).setNotices(notice).build().showAppCompat();
 
     }
 
     private void showOkhttpLicense() {
+        Context context = getContext();
+        final String name = context.getResources().getString(R.string.about_okhttp_license_title);
+        final String url = context.getResources().getString(R.string.about_okhttp_url);
+        final String copyright = context.getResources().getString(R.string.about_okhttp_copyright);
+        final License license = new ApacheSoftwareLicense20();
+        final Notice notice = new Notice(name, url, copyright, license);
+        new LicensesDialog.Builder(context).setNotices(notice).build().showAppCompat();
 
     }
 }
