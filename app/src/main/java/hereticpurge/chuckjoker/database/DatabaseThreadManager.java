@@ -3,8 +3,6 @@ package hereticpurge.chuckjoker.database;
 import android.os.Handler;
 import android.os.HandlerThread;
 
-import timber.log.Timber;
-
 public class DatabaseThreadManager {
 
     private static final String THREAD_NAME = "DatabaseThread";

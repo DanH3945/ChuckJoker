@@ -14,15 +14,16 @@ import timber.log.Timber;
 
 public final class ApiCalls {
 
-    private ApiCalls() {}
+    private ApiCalls() {
+    }
 
     public interface ApiCallback<T> {
         void response(int responseCode, @Nullable T t);
     }
 
     public static void GET(OkHttpClient client,
-                    HttpUrl httpUrl,
-                    ApiCallback<String> apiCallback) {
+                           HttpUrl httpUrl,
+                           ApiCallback<String> apiCallback) {
 
         Request request = new Request.Builder()
                 .url(httpUrl)

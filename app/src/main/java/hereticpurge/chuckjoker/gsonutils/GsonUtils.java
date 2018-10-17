@@ -4,7 +4,6 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,7 +16,8 @@ public final class GsonUtils {
 
     public static final int UNPACK_FAILED = -1;
 
-    public static @Nullable JokeItem unpackJoke(String jsonString) {
+    public static @Nullable
+    JokeItem unpackJoke(String jsonString) {
         try {
             JSONObject baseObject = new JSONObject(jsonString);
             if (baseObject.getString("type").equalsIgnoreCase("Success")) {

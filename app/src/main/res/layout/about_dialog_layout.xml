@@ -27,7 +27,7 @@
         android:contentDescription="@string/about_third_party_licenses"
         android:focusable="true"
         android:gravity="center"
-        android:text="@string/about_third_party_licenses"/>
+        android:text="@string/about_third_party_licenses" />
 
 
     <TextView

@@ -3,11 +3,7 @@ package hereticpurge.chuckjoker.model;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.os.AsyncTask;
 import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
 import java.util.List;
