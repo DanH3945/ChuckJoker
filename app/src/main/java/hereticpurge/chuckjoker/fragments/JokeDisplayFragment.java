@@ -129,7 +129,7 @@ public class JokeDisplayFragment extends Fragment {
     private void bindJokeCount() {
         mJokeRepository.getAllJokesLive().observe(this, jokeItems -> {
             if (jokeItems != null) {
-                mJokeCountTextView.setText(Integer.toString(jokeItems.size()));
+                mJokeCountTextView.setText(String.valueOf(jokeItems.size()));
             }
         });
     }

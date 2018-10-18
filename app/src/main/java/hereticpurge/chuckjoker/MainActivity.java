@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void populateDatabase(int numJokes) {
         while (!DatabaseThreadManager.getManager().isReady()) {
+            // Todo Fix this so the app doesn't time out and get killed
             // Just waiting on the ThreadManager
         }
         // For now we're wiping the database each time we need to add new jokes.

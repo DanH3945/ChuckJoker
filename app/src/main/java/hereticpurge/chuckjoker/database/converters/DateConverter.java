@@ -10,7 +10,7 @@ public class DateConverter {
 
     @TypeConverter
     public static long getTimeStamp(Date date) {
-        return date == null ? null : date.getTime();
+        return date == null ? 0 : date.getTime();
     }
 
     @TypeConverter
