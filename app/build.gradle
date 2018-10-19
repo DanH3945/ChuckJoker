@@ -49,6 +49,8 @@ dependencies {
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
     implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
     implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxjavaAndroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion"
 
     // Room database libraries
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
