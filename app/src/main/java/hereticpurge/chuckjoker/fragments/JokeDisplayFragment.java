@@ -17,7 +17,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.database.DatabaseThreadManager;
+import hereticpurge.chuckjoker.gsonutils.GsonUtils;
+import hereticpurge.chuckjoker.icndb.ApiCalls;
+import hereticpurge.chuckjoker.icndb.ApiReference;
+import hereticpurge.chuckjoker.model.JokeItem;
 import hereticpurge.chuckjoker.model.JokeRepository;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
 import timber.log.Timber;
 
 public class JokeDisplayFragment extends Fragment {
@@ -59,8 +65,22 @@ public class JokeDisplayFragment extends Fragment {
 
         mRandomJokeButton = view.findViewById(R.id.joke_display_fragment_random_joke_button);
         mRandomJokeButton.setOnClickListener(v -> {
-            mCurrentDisplayIndex = ThreadLocalRandom.current().nextInt(0, mJokeRepository.getAllJokes().size());
-            showJoke();
+            mCurrentDisplayIndex = ThreadLocalRandom.current().nextInt(0, 500);
+            OkHttpClient client = new OkHttpClient();
+            HttpUrl url = HttpUrl.get(ApiReference.SINGLE_JOKE_URL + mCurrentDisplayIndex);
+            ApiCalls.GET(client, url, new ApiCalls.ApiCallback<String>() {
+                @Override
+                public void response(int responseCode, @Nullable String s) {
+                    JokeItem jokeItem = GsonUtils.unpackJoke(s);
+                    Handler handler = new Handler(getActivity().getMainLooper());
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mJokeBodyTextView.setText(jokeItem.getJokeBody());
+                        }
+                    });
+                }
+            });
         });
 
         // All done with the setup.  Load the first joke as soon as the repository is ready.
