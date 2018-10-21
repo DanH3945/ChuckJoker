@@ -13,11 +13,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.database.DatabaseThreadManager;
 import hereticpurge.chuckjoker.gsonutils.GsonUtils;
+import hereticpurge.chuckjoker.gsonutils.JokeTotalCountGsonObject;
 import hereticpurge.chuckjoker.icndb.ApiCalls;
 import hereticpurge.chuckjoker.icndb.ApiReference;
 import hereticpurge.chuckjoker.model.JokeItem;
@@ -64,51 +67,9 @@ public class JokeDisplayFragment extends Fragment {
         mJokeRepository = JokeRepository.getJokeRepository();
 
         mRandomJokeButton = view.findViewById(R.id.joke_display_fragment_random_joke_button);
-        mRandomJokeButton.setOnClickListener(v -> {
-            mCurrentDisplayIndex = ThreadLocalRandom.current().nextInt(0, 500);
-            OkHttpClient client = new OkHttpClient();
-            HttpUrl url = HttpUrl.get(ApiReference.SINGLE_JOKE_URL + mCurrentDisplayIndex);
-            ApiCalls.GET(client, url, new ApiCalls.ApiCallback<String>() {
-                @Override
-                public void response(int responseCode, @Nullable String s) {
-                    JokeItem jokeItem = GsonUtils.unpackJoke(s);
-                    Handler handler = new Handler(getActivity().getMainLooper());
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mJokeBodyTextView.setText(jokeItem.getJokeBody());
-                        }
-                    });
-                }
-            });
-        });
+        mRandomJokeButton.setOnClickListener(v -> getRandomJoke());
 
-        // All done with the setup.  Load the first joke as soon as the repository is ready.
-        // Here we're putting the call to sleep until the repo is ready into a runnable and sending
-        // it off onto our second thread (in this case the database thread since it's easily accessible
-        // and creating another thread just for this one call is a bit excessive.
-        DatabaseThreadManager.getManager().getHandler().post(new Runnable() {
-            @Override
-            public void run() {
-                while (!mJokeRepository.isReady()) {
-                    try {
-                        Thread.sleep(250);
-                    } catch (InterruptedException e) {
-                        // Do nothing since we're just waiting for the repo to be ready.
-                    }
-                }
-
-                // The repo is now ready so we get the main Thread's handler and push the call
-                // to show back onto the main thread so we can manipulate views.
-                Handler handler = new Handler(getActivity().getMainLooper());
-                handler.post(() -> {
-                    if (JokeDisplayFragment.this.getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
-                        showJoke();
-                        bindJokeCount();
-                    }
-                });
-            }
-        });
+        getJoke(mCurrentDisplayIndex);
 
         return view;
     }
@@ -132,24 +93,45 @@ public class JokeDisplayFragment extends Fragment {
         outState.putInt(INDEX_SAVE_KEY, mCurrentDisplayIndex);
     }
 
-    private boolean showJoke() {
-        String jokeString = null;
-        if (mJokeRepository.getAllJokes().size() > 0) {
-            jokeString = mJokeRepository.getAllJokes().get(mCurrentDisplayIndex).getJokeBody();
-        }
+    private boolean showJoke(String jokeBody) {
         // Boolean return values here just in case they are needed later.
-        if (jokeString != null && !jokeString.equals("")) {
-            mJokeBodyTextView.setText(jokeString);
+        if (jokeBody != null && !jokeBody.equals("")) {
+            mJokeBodyTextView.setText(jokeBody);
             return true;
         }
         mJokeBodyTextView.setText(getActivity().getResources().getString(R.string.joke_body_error));
         return false;
     }
 
-    private void bindJokeCount() {
-        mJokeRepository.getAllJokesLive().observe(this, jokeItems -> {
-            if (jokeItems != null) {
-                mJokeCountTextView.setText(String.valueOf(jokeItems.size()));
+    private void getJoke(int jokeNum) {
+        OkHttpClient client = new OkHttpClient();
+        HttpUrl url = HttpUrl.get(ApiReference.SINGLE_JOKE_URL + jokeNum);
+
+        ApiCalls.GET(client, url, new ApiCalls.ApiCallback<String>() {
+            @Override
+            public void response(int responseCode, @Nullable String s) {
+                JokeItem jokeItem = GsonUtils.unpackJoke(s);
+                Handler handler = new Handler(getActivity().getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        showJoke(jokeItem.getJokeBody());
+                    }
+                });
+            }
+        });
+    }
+
+    private void getRandomJoke() {
+        OkHttpClient client = new OkHttpClient();
+        HttpUrl url = HttpUrl.get(ApiReference.ALL_JOKES_COUNT_URL);
+
+        ApiCalls.GET(client, url, new ApiCalls.ApiCallback<String>() {
+            @Override
+            public void response(int responseCode, @Nullable String s) {
+                int maxJokeCount = GsonUtils.unpackTotalJokesCount(s);
+                int randomJokeNumber = ThreadLocalRandom.current().nextInt(0, maxJokeCount);
+                getJoke(randomJokeNumber);
             }
         });
     }
