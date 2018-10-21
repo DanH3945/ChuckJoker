@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.gsonutils.GsonUtils;
@@ -124,9 +124,16 @@ public class JokeDisplayFragment extends Fragment {
             @Override
             public void response(int responseCode, @Nullable String s) {
                 int maxJokeCount = GsonUtils.unpackTotalJokesCount(s);
-                int randomJokeNumber = ThreadLocalRandom.current().nextInt(0, maxJokeCount);
-                mCurrentDisplayIndex = randomJokeNumber;
-                getJoke(randomJokeNumber);
+
+                // Removed ThreadLocalRandom() usage because the numbers weren't coming back
+                // random enough.  The same jokes were being displayed repeatedly.
+                // int randomJokeNumber = ThreadLocalRandom.current().nextInt(0, maxJokeCount);
+
+                Random r = new Random();
+                int randNum = r.nextInt(maxJokeCount);
+
+                mCurrentDisplayIndex = randNum;
+                getJoke(randNum);
             }
         });
     }
