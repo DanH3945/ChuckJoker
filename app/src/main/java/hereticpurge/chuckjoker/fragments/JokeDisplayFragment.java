@@ -1,6 +1,5 @@
 package hereticpurge.chuckjoker.fragments;
 
-import android.arch.lifecycle.Lifecycle;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -13,18 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-
 import java.util.concurrent.ThreadLocalRandom;
 
 import hereticpurge.chuckjoker.R;
-import hereticpurge.chuckjoker.database.DatabaseThreadManager;
 import hereticpurge.chuckjoker.gsonutils.GsonUtils;
-import hereticpurge.chuckjoker.gsonutils.JokeTotalCountGsonObject;
 import hereticpurge.chuckjoker.icndb.ApiCalls;
 import hereticpurge.chuckjoker.icndb.ApiReference;
 import hereticpurge.chuckjoker.model.JokeItem;
-import hereticpurge.chuckjoker.model.JokeRepository;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import timber.log.Timber;
@@ -32,9 +26,6 @@ import timber.log.Timber;
 public class JokeDisplayFragment extends Fragment {
 
     private TextView mJokeBodyTextView;
-    private TextView mJokeCountTextView;
-
-    private JokeRepository mJokeRepository;
 
     private Button mRandomJokeButton;
 
@@ -62,14 +53,11 @@ public class JokeDisplayFragment extends Fragment {
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mJokeBodyTextView = view.findViewById(R.id.joke_display_joke_body_text);
-        mJokeCountTextView = view.findViewById(R.id.joke_display_joke_count);
-
-        mJokeRepository = JokeRepository.getJokeRepository();
 
         mRandomJokeButton = view.findViewById(R.id.joke_display_fragment_random_joke_button);
         mRandomJokeButton.setOnClickListener(v -> getRandomJoke());
 
-        getJoke(mCurrentDisplayIndex);
+        getRandomJoke();
 
         return view;
     }
@@ -115,7 +103,13 @@ public class JokeDisplayFragment extends Fragment {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        showJoke(jokeItem.getJokeBody());
+                        if (jokeItem != null) {
+                            showJoke(jokeItem.getJokeBody());
+                        } else {
+                            // Given joke number on the API returned null so it probably doesn't exist.
+                            // Instead we increment the current index and display the next joke in line.
+                            getJoke(++mCurrentDisplayIndex);
+                        }
                     }
                 });
             }
@@ -131,6 +125,7 @@ public class JokeDisplayFragment extends Fragment {
             public void response(int responseCode, @Nullable String s) {
                 int maxJokeCount = GsonUtils.unpackTotalJokesCount(s);
                 int randomJokeNumber = ThreadLocalRandom.current().nextInt(0, maxJokeCount);
+                mCurrentDisplayIndex = randomJokeNumber;
                 getJoke(randomJokeNumber);
             }
         });
