@@ -26,6 +26,7 @@ import timber.log.Timber;
 public class JokeDisplayFragment extends Fragment {
 
     private TextView mJokeBodyTextView;
+    private TextView mCurrentJokeNumText;
 
     private Button mRandomJokeButton;
 
@@ -53,6 +54,7 @@ public class JokeDisplayFragment extends Fragment {
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mJokeBodyTextView = view.findViewById(R.id.joke_display_joke_body_text);
+        mCurrentJokeNumText = view.findViewById(R.id.joke_display_joke_number_text);
 
         mRandomJokeButton = view.findViewById(R.id.joke_display_fragment_random_joke_button);
         mRandomJokeButton.setOnClickListener(v -> getRandomJoke());
@@ -84,6 +86,7 @@ public class JokeDisplayFragment extends Fragment {
     private boolean showJoke(String jokeBody) {
         // Boolean return values here just in case they are needed later.
         if (jokeBody != null && !jokeBody.equals("")) {
+            mCurrentJokeNumText.setText(mCurrentDisplayIndex);
             mJokeBodyTextView.setText(jokeBody);
             return true;
         }

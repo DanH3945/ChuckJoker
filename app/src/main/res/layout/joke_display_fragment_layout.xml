@@ -9,7 +9,7 @@
         android:layout_width="@dimen/joke_display_fragment_button_width"
         android:layout_height="@dimen/joke_display_fragment_button_height"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/joke_display_fragment_check_new_jokes_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="@dimen/joke_display_fragment_button_margin"
         android:text="@string/joke_display_fragment_random_button_text"
@@ -42,7 +42,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/joke_display_joke_count"
+        android:id="@+id/joke_display_joke_number_text"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
