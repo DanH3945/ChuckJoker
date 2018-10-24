@@ -1,9 +1,11 @@
-package hereticpurge.chuckjoker;
+package hereticpurge.chuckjoker.fragments.fragmentutils;
 
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+
+import hereticpurge.chuckjoker.R;
 
 public class LoadingSpinner {
 

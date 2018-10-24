@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import java.util.Random;
 
-import hereticpurge.chuckjoker.LoadingSpinner;
+import hereticpurge.chuckjoker.fragments.fragmentutils.LoadingSpinner;
 import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.gsonutils.GsonUtils;
 import hereticpurge.chuckjoker.icndb.ApiCalls;
