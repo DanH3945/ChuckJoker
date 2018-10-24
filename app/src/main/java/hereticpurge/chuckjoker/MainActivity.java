@@ -11,8 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -35,9 +33,6 @@ import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
-    FrameLayout mFragmentContainer;
-    ProgressBar mProgressBar;
-
     private JokeRepository mJokeRepository;
 
     private JokeViewModel mViewModel;
@@ -59,15 +54,8 @@ public class MainActivity extends AppCompatActivity {
             Timber.plant(new TimberReleaseTree());
         }
 
-        mFragmentContainer = findViewById(R.id.main_fragment_container);
-        mProgressBar = findViewById(R.id.loading_spinner);
-
-        showLoadingSpinner();
-
         if (savedInstanceState == null) {
             loadFragment(getJokeDisplayFragment(), false, null);
-        } else {
-            hideLoadingSpinner();
         }
 
         AdRequest adRequest = new AdRequest.Builder()
@@ -109,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadFragment(Fragment fragment, boolean addToBackStack, String tag) {
-        showLoadingSpinner();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_fragment_container, fragment);
@@ -117,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
         if (addToBackStack) fragmentTransaction.addToBackStack(tag);
         fragmentTransaction.commit();
         fragmentManager.executePendingTransactions();
-        hideLoadingSpinner();
     }
 
     public void checkForNewJokes(View view) {
@@ -159,16 +145,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    private void showLoadingSpinner() {
-        mFragmentContainer.setVisibility(View.INVISIBLE);
-        mProgressBar.setVisibility(View.VISIBLE);
-    }
-
-    private void hideLoadingSpinner() {
-        mFragmentContainer.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override

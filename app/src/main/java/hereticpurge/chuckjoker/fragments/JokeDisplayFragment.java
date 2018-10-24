@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.Random;
 
+import hereticpurge.chuckjoker.LoadingSpinner;
 import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.gsonutils.GsonUtils;
 import hereticpurge.chuckjoker.icndb.ApiCalls;
@@ -36,6 +37,8 @@ public class JokeDisplayFragment extends Fragment {
 
     private String INDEX_SAVE_KEY = "indexSaveKey";
 
+    private LoadingSpinner mLoadingSpinner;
+
     public static JokeDisplayFragment createInstance() {
         return new JokeDisplayFragment();
     }
@@ -48,6 +51,8 @@ public class JokeDisplayFragment extends Fragment {
         this.setRetainInstance(true);
 
         mCurrentDisplayIndex = DEFAULT_INDEX;
+
+        mLoadingSpinner = new LoadingSpinner(this);
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -86,15 +91,18 @@ public class JokeDisplayFragment extends Fragment {
     private boolean showJoke(String jokeBody) {
         // Boolean return values here just in case they are needed later.
         if (jokeBody != null && !jokeBody.equals("")) {
-            mCurrentJokeNumText.setText(mCurrentDisplayIndex);
+            mCurrentJokeNumText.setText(String.valueOf(mCurrentDisplayIndex));
             mJokeBodyTextView.setText(jokeBody);
+            mLoadingSpinner.hideLoadingSpinner();
             return true;
         }
         mJokeBodyTextView.setText(getActivity().getResources().getString(R.string.joke_body_error));
+        mLoadingSpinner.hideLoadingSpinner();
         return false;
     }
 
     private void getJoke(int jokeNum) {
+        mLoadingSpinner.showLoadingSpinner();
         OkHttpClient client = new OkHttpClient();
         HttpUrl url = HttpUrl.get(ApiReference.SINGLE_JOKE_URL + jokeNum);
 
@@ -120,6 +128,7 @@ public class JokeDisplayFragment extends Fragment {
     }
 
     private void getRandomJoke() {
+        mLoadingSpinner.showLoadingSpinner();
         OkHttpClient client = new OkHttpClient();
         HttpUrl url = HttpUrl.get(ApiReference.ALL_JOKES_COUNT_URL);
 
