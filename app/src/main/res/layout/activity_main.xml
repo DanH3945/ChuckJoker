@@ -8,14 +8,6 @@
         android:layout_height="match_parent"
         android:visibility="invisible">
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/included_ad_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            ads:adSize="BANNER"
-            ads:adUnitId="@string/ads_test_banner_unit_id"
-            android:layout_gravity="top|center" />
-
     </FrameLayout>
 
     <ProgressBar
@@ -26,5 +18,13 @@
         android:indeterminateTint="@color/colorPrimary"
         android:layout_gravity="center"
         android:visibility="visible" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/included_ad_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/ads_test_banner_unit_id"
+        android:layout_gravity="top|center" />
 
 </merge>
