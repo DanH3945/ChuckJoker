@@ -1,4 +1,4 @@
-package hereticpurge.chuckjoker.gsonutils;
+package hereticpurge.chuckjoker.jsonutils;
 
 public class JokeTotalCountGsonObject {
     public String type;

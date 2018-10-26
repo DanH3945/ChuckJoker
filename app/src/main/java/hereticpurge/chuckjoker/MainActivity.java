@@ -20,7 +20,7 @@ import java.util.Date;
 import hereticpurge.chuckjoker.database.DatabaseThreadManager;
 import hereticpurge.chuckjoker.fragments.AboutDialogFragment;
 import hereticpurge.chuckjoker.fragments.JokeDisplayFragment;
-import hereticpurge.chuckjoker.gsonutils.GsonUtils;
+import hereticpurge.chuckjoker.jsonutils.JsonUtils;
 import hereticpurge.chuckjoker.icndb.ApiCalls;
 import hereticpurge.chuckjoker.icndb.ApiReference;
 import hereticpurge.chuckjoker.logging.TimberReleaseTree;
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         HttpUrl url = HttpUrl.get(ApiReference.ALL_JOKES_COUNT_URL);
         ApiCalls.get(client, url, (responseCode, s) -> {
             if (s != null && mJokeRepository.isReady()) {
-                int numJokesAvailable = GsonUtils.unpackTotalJokesCount(s);
+                int numJokesAvailable = JsonUtils.unpackTotalJokesCount(s);
                 if (numJokesAvailable > mJokeRepository.getAllJokes().size() &&
                         MainActivity.this.getLifecycle().getCurrentState() == Lifecycle.State.RESUMED) {
                     Handler handler = new Handler(this.getMainLooper());
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 1; i < numJokes; i++) {
             HttpUrl url = HttpUrl.parse(ApiReference.SINGLE_JOKE_URL + i);
             ApiCalls.get(client, url, (responseCode, s) -> {
-                JokeItem jokeItem = GsonUtils.unpackJoke(s);
+                JokeItem jokeItem = JsonUtils.unpackJoke(s);
                 if (jokeItem != null) {
                     Timber.d("Inserting joke");
                     mViewModel.insertJoke(jokeItem);

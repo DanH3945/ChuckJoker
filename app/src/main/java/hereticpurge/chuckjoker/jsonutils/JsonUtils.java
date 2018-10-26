@@ -1,4 +1,4 @@
-package hereticpurge.chuckjoker.gsonutils;
+package hereticpurge.chuckjoker.jsonutils;
 
 import android.support.annotation.Nullable;
 
@@ -12,7 +12,7 @@ import java.util.Date;
 import hereticpurge.chuckjoker.model.JokeItem;
 import timber.log.Timber;
 
-public final class GsonUtils {
+public final class JsonUtils {
 
     public static final int UNPACK_FAILED = -1;
 

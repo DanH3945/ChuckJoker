@@ -16,7 +16,7 @@ import java.util.Random;
 
 import hereticpurge.chuckjoker.fragments.fragmentutils.LoadingSpinner;
 import hereticpurge.chuckjoker.R;
-import hereticpurge.chuckjoker.gsonutils.GsonUtils;
+import hereticpurge.chuckjoker.jsonutils.JsonUtils;
 import hereticpurge.chuckjoker.icndb.ApiCalls;
 import hereticpurge.chuckjoker.icndb.ApiReference;
 import hereticpurge.chuckjoker.model.JokeItem;
@@ -64,7 +64,9 @@ public class JokeDisplayFragment extends Fragment {
         mRandomJokeButton = view.findViewById(R.id.joke_display_fragment_random_joke_button);
         mRandomJokeButton.setOnClickListener(v -> getRandomJoke());
 
-        getRandomJoke();
+        if (savedInstanceState == null) {
+            getRandomJoke();
+        }
 
         return view;
     }
@@ -75,6 +77,7 @@ public class JokeDisplayFragment extends Fragment {
         try {
             if (savedInstanceState != null) {
                 mCurrentDisplayIndex = savedInstanceState.getInt(INDEX_SAVE_KEY);
+                getJoke(mCurrentDisplayIndex);
             }
         } catch (NullPointerException e) {
             // Error loading the save state so we log and do nothing while letting the default state load
@@ -109,7 +112,7 @@ public class JokeDisplayFragment extends Fragment {
         ApiCalls.get(client, url, new ApiCalls.ApiCallback<String>() {
             @Override
             public void response(int responseCode, @Nullable String s) {
-                JokeItem jokeItem = GsonUtils.unpackJoke(s);
+                JokeItem jokeItem = JsonUtils.unpackJoke(s);
                 Handler handler = new Handler(getActivity().getMainLooper());
                 handler.post(new Runnable() {
                     @Override
@@ -135,7 +138,7 @@ public class JokeDisplayFragment extends Fragment {
         ApiCalls.get(client, url, new ApiCalls.ApiCallback<String>() {
             @Override
             public void response(int responseCode, @Nullable String s) {
-                int maxJokeCount = GsonUtils.unpackTotalJokesCount(s);
+                int maxJokeCount = JsonUtils.unpackTotalJokesCount(s);
 
                 // Removed ThreadLocalRandom() usage because the numbers weren't coming back
                 // random enough.  The same jokes were being displayed repeatedly.
