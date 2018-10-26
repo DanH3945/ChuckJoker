@@ -106,7 +106,7 @@ public class JokeDisplayFragment extends Fragment {
         OkHttpClient client = new OkHttpClient();
         HttpUrl url = HttpUrl.get(ApiReference.SINGLE_JOKE_URL + jokeNum);
 
-        ApiCalls.GET(client, url, new ApiCalls.ApiCallback<String>() {
+        ApiCalls.get(client, url, new ApiCalls.ApiCallback<String>() {
             @Override
             public void response(int responseCode, @Nullable String s) {
                 JokeItem jokeItem = GsonUtils.unpackJoke(s);
@@ -132,7 +132,7 @@ public class JokeDisplayFragment extends Fragment {
         OkHttpClient client = new OkHttpClient();
         HttpUrl url = HttpUrl.get(ApiReference.ALL_JOKES_COUNT_URL);
 
-        ApiCalls.GET(client, url, new ApiCalls.ApiCallback<String>() {
+        ApiCalls.get(client, url, new ApiCalls.ApiCallback<String>() {
             @Override
             public void response(int responseCode, @Nullable String s) {
                 int maxJokeCount = GsonUtils.unpackTotalJokesCount(s);

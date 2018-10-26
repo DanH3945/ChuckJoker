@@ -21,7 +21,7 @@ public final class ApiCalls {
         void response(int responseCode, @Nullable T t);
     }
 
-    public static void GET(OkHttpClient client,
+    public static void get(OkHttpClient client,
                            HttpUrl httpUrl,
                            ApiCallback<String> apiCallback) {
 

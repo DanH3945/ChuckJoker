@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
     public void checkForNewJokes(View view) {
         OkHttpClient client = new OkHttpClient();
         HttpUrl url = HttpUrl.get(ApiReference.ALL_JOKES_COUNT_URL);
-        ApiCalls.GET(client, url, (responseCode, s) -> {
+        ApiCalls.get(client, url, (responseCode, s) -> {
             if (s != null && mJokeRepository.isReady()) {
                 int numJokesAvailable = GsonUtils.unpackTotalJokesCount(s);
                 if (numJokesAvailable > mJokeRepository.getAllJokes().size() &&
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
         for (int i = 1; i < numJokes; i++) {
             HttpUrl url = HttpUrl.parse(ApiReference.SINGLE_JOKE_URL + i);
-            ApiCalls.GET(client, url, (responseCode, s) -> {
+            ApiCalls.get(client, url, (responseCode, s) -> {
                 JokeItem jokeItem = GsonUtils.unpackJoke(s);
                 if (jokeItem != null) {
                     Timber.d("Inserting joke");
