@@ -106,13 +106,9 @@ public class JokeDisplayFragment extends Fragment {
 
     private void getJoke(int jokeNum) {
         mLoadingSpinner.showLoadingSpinner();
-        OkHttpClient client = new OkHttpClient();
-        HttpUrl url = HttpUrl.get(ApiReference.SINGLE_JOKE_URL + jokeNum);
-
-        ApiCalls.get(client, url, new ApiCalls.ApiCallback<String>() {
+        ApiCalls.getSingleJokeItem(jokeNum, new ApiCalls.ApiCallback<JokeItem>() {
             @Override
-            public void response(int responseCode, @Nullable String s) {
-                JokeItem jokeItem = JsonUtils.unpackJoke(s);
+            public void response(int responseCode, @Nullable JokeItem jokeItem) {
                 Handler handler = new Handler(getActivity().getMainLooper());
                 handler.post(new Runnable() {
                     @Override

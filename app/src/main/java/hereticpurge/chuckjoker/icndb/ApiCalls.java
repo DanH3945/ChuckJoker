@@ -4,6 +4,8 @@ import android.support.annotation.Nullable;
 
 import java.io.IOException;
 
+import hereticpurge.chuckjoker.jsonutils.JsonUtils;
+import hereticpurge.chuckjoker.model.JokeItem;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -41,6 +43,18 @@ public final class ApiCalls {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 apiCallback.response(response.code(), response.body().string());
+            }
+        });
+    }
+
+    public static void getSingleJokeItem(int jokeNum, ApiCallback<JokeItem> paramCallback) {
+        OkHttpClient client = new OkHttpClient();
+        HttpUrl url = HttpUrl.get(ApiReference.SINGLE_JOKE_URL + jokeNum);
+
+        get(client, url, new ApiCallback<String>() {
+            @Override
+            public void response(int responseCode, @Nullable String s) {
+                paramCallback.response(responseCode, JsonUtils.unpackJoke(s));
             }
         });
     }
