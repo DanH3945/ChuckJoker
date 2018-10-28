@@ -26,7 +26,7 @@
         android:text="@string/joke_display_fragment_check_new_button_text"
         android:textSize="@dimen/joke_display_fragment_button_text_size"
         android:onClick="checkForNewJokes"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/joke_display_joke_body_text"
@@ -39,7 +39,7 @@
         android:text="@string/joke_display_fragment_joke_body_default_text"
         android:gravity="center"
         android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"/>
+        android:layout_marginEnd="24dp" />
 
     <TextView
         android:layout_width="wrap_content"
