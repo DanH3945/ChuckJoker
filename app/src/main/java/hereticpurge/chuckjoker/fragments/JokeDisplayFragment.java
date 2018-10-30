@@ -63,6 +63,7 @@ public class JokeDisplayFragment extends Fragment {
         mCurrentJokeNumText = view.findViewById(R.id.joke_display_joke_number_text);
 
         if (BuildConfig.DEBUG) {
+            // Todo setup shared preferences for this option
             mCurrentJokeNumText.setVisibility(View.VISIBLE);
         }
 
