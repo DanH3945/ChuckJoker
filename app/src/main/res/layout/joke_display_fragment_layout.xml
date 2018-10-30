@@ -1,54 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <Button
         android:id="@+id/joke_display_fragment_random_joke_button"
         android:layout_width="@dimen/joke_display_fragment_button_width"
         android:layout_height="@dimen/joke_display_fragment_button_height"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="@dimen/joke_display_fragment_button_margin"
         android:text="@string/joke_display_fragment_random_button_text"
-        android:textSize="@dimen/joke_display_fragment_button_text_size" />
+        android:textSize="@dimen/joke_display_fragment_button_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9" />
 
     <Button
         android:id="@+id/joke_display_fragment_check_new_jokes_button"
         android:layout_width="@dimen/joke_display_fragment_button_width"
         android:layout_height="@dimen/joke_display_fragment_button_height"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/joke_display_fragment_random_joke_button"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="@dimen/joke_display_fragment_button_margin"
+        android:onClick="checkForNewJokes"
         android:text="@string/joke_display_fragment_check_new_button_text"
         android:textSize="@dimen/joke_display_fragment_button_text_size"
-        android:onClick="checkForNewJokes"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/joke_display_fragment_random_joke_button" />
 
     <TextView
         android:id="@+id/joke_display_joke_body_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/joke_display_fragment_random_joke_button"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/joke_display_fragment_joke_body_default_text"
-        android:gravity="center"
+        android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp" />
+        android:gravity="center"
+        android:text="@string/joke_display_fragment_joke_body_default_text"
+        app:layout_constraintBottom_toTopOf="@id/joke_display_fragment_random_joke_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/joke_display_joke_number_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/joke_display_joke_number_text"
-        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="64dp"
-        android:gravity="center" />
+        app:layout_constraintBottom_toTopOf="@id/joke_display_fragment_random_joke_button"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"/>
 
 </android.support.constraint.ConstraintLayout>

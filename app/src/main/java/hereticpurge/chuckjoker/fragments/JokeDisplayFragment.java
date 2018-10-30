@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.Random;
 
+import hereticpurge.chuckjoker.BuildConfig;
 import hereticpurge.chuckjoker.fragments.fragmentutils.LoadingSpinner;
 import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.jsonutils.JsonUtils;
@@ -60,6 +61,10 @@ public class JokeDisplayFragment extends Fragment {
 
         mJokeBodyTextView = view.findViewById(R.id.joke_display_joke_body_text);
         mCurrentJokeNumText = view.findViewById(R.id.joke_display_joke_number_text);
+
+        if (BuildConfig.DEBUG) {
+            mCurrentJokeNumText.setVisibility(View.VISIBLE);
+        }
 
         mRandomJokeButton = view.findViewById(R.id.joke_display_fragment_random_joke_button);
         mRandomJokeButton.setOnClickListener(v -> getRandomJoke());
