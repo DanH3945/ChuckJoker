@@ -12,9 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.Random;
 
 import hereticpurge.chuckjoker.BuildConfig;
+import hereticpurge.chuckjoker.ChuckJokerApplication;
 import hereticpurge.chuckjoker.fragments.fragmentutils.LoadingSpinner;
 import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.jsonutils.JsonUtils;
@@ -39,6 +43,9 @@ public class JokeDisplayFragment extends Fragment {
     private String INDEX_SAVE_KEY = "indexSaveKey";
 
     private LoadingSpinner mLoadingSpinner;
+
+    private Tracker mTracker;
+    private static final String TAG = "JokeDisplayFragment";
 
     public static JokeDisplayFragment createInstance() {
         return new JokeDisplayFragment();
@@ -74,7 +81,20 @@ public class JokeDisplayFragment extends Fragment {
             getRandomJoke();
         }
 
+        if (getActivity() != null) {
+            // Google Analytics tracker.
+            mTracker = ((ChuckJokerApplication) getActivity().getApplication()).getDefaultTracker();
+        }
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+//        need a new tracking id for this app before enabling the actual analytics tracking.
+//        mTracker.setScreenName(TAG);
+//        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        super.onResume();
     }
 
     @Override
