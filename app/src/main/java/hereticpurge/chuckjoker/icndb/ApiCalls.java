@@ -51,11 +51,6 @@ public final class ApiCalls {
         OkHttpClient client = new OkHttpClient();
         HttpUrl url = HttpUrl.get(ApiReference.SINGLE_JOKE_URL + jokeNum);
 
-        get(client, url, new ApiCallback<String>() {
-            @Override
-            public void response(int responseCode, @Nullable String s) {
-                paramCallback.response(responseCode, JsonUtils.unpackJoke(s));
-            }
-        });
+        get(client, url, (responseCode, s) -> paramCallback.response(responseCode, JsonUtils.unpackJoke(s)));
     }
 }

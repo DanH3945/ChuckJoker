@@ -132,23 +132,17 @@ public class JokeDisplayFragment extends Fragment {
 
     private void getJoke(int jokeNum) {
         mLoadingSpinner.showLoadingSpinner();
-        ApiCalls.getSingleJokeItem(jokeNum, new ApiCalls.ApiCallback<JokeItem>() {
-            @Override
-            public void response(int responseCode, @Nullable JokeItem jokeItem) {
-                Handler handler = new Handler(getActivity().getMainLooper());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (jokeItem != null) {
-                            showJoke(jokeItem.getJokeBody());
-                        } else {
-                            // Given joke number on the API returned null so it probably doesn't exist.
-                            // Instead we increment the current index and display the next joke in line.
-                            getJoke(++mCurrentDisplayIndex);
-                        }
-                    }
-                });
-            }
+        ApiCalls.getSingleJokeItem(jokeNum, (responseCode, jokeItem) -> {
+            Handler handler = new Handler(getActivity().getMainLooper());
+            handler.post(() -> {
+                if (jokeItem != null) {
+                    showJoke(jokeItem.getJokeBody());
+                } else {
+                    // Given joke number on the API returned null so it probably doesn't exist.
+                    // Instead we increment the current index and display the next joke in line.
+                    getJoke(++mCurrentDisplayIndex);
+                }
+            });
         });
     }
 
@@ -157,21 +151,18 @@ public class JokeDisplayFragment extends Fragment {
         OkHttpClient client = new OkHttpClient();
         HttpUrl url = HttpUrl.get(ApiReference.ALL_JOKES_COUNT_URL);
 
-        ApiCalls.get(client, url, new ApiCalls.ApiCallback<String>() {
-            @Override
-            public void response(int responseCode, @Nullable String s) {
-                int maxJokeCount = JsonUtils.unpackTotalJokesCount(s);
+        ApiCalls.get(client, url, (responseCode, s) -> {
+            int maxJokeCount = JsonUtils.unpackTotalJokesCount(s);
 
-                // Removed ThreadLocalRandom() usage because the numbers weren't coming back
-                // random enough.  The same jokes were being displayed repeatedly.
-                // int randomJokeNumber = ThreadLocalRandom.current().nextInt(0, maxJokeCount);
+            // Removed ThreadLocalRandom() usage because the numbers weren't coming back
+            // random enough.  The same jokes were being displayed repeatedly.
+            // int randomJokeNumber = ThreadLocalRandom.current().nextInt(0, maxJokeCount);
 
-                Random r = new Random();
-                int randNum = r.nextInt(maxJokeCount);
+            Random r = new Random();
+            int randNum = r.nextInt(maxJokeCount);
 
-                mCurrentDisplayIndex = randNum;
-                getJoke(randNum);
-            }
+            mCurrentDisplayIndex = randNum;
+            getJoke(randNum);
         });
     }
 }
