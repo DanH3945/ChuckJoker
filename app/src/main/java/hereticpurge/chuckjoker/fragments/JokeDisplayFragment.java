@@ -147,13 +147,14 @@ public class JokeDisplayFragment extends Fragment {
     }
 
     private void getRandomJoke() {
-        ApiCalls.getRandomJokeItem(new ApiCalls.ApiCallback<JokeItem>() {
-            @Override
-            public void response(int responseCode, @Nullable JokeItem jokeItem) {
+        ApiCalls.getRandomJokeItem((responseCode, jokeItem) -> {
+            Handler handler = new Handler(getActivity().getMainLooper());
+            handler.post(() -> {
                 if (jokeItem != null) {
                     showJoke(jokeItem.getJokeBody());
+                    mCurrentDisplayIndex = jokeItem.getId();
                 }
-            }
+            });
         });
     }
 }

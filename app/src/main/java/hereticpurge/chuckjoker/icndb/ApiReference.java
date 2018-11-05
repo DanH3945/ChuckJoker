@@ -13,7 +13,7 @@ public class ApiReference {
     // Random joke url
     // http://api.icndb.com/jokes/random
     // returns a single random joke json chosen at random
-    public static final String RANDOM_JOKE_URL = ICNDB_BASE_URL + "/random";
+    public static final String RANDOM_JOKE_URL = ICNDB_BASE_URL + "/jokes/random";
 
     // Total joke count url
     // http://api.icndb.com/jokes/count
