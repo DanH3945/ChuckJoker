@@ -53,4 +53,11 @@ public final class ApiCalls {
 
         get(client, url, (responseCode, s) -> paramCallback.response(responseCode, JsonUtils.unpackJoke(s)));
     }
+
+    public static void getRandomJokeItem(ApiCallback<JokeItem> callback) {
+        OkHttpClient client = new OkHttpClient();
+        HttpUrl url = HttpUrl.get(ApiReference.RANDOM_JOKE_URL);
+
+        get(client, url, (responseCode, s) -> callback.response(responseCode, JsonUtils.unpackJoke(s)));
+    }
 }

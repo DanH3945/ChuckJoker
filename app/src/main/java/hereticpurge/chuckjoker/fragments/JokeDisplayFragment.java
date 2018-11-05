@@ -147,22 +147,13 @@ public class JokeDisplayFragment extends Fragment {
     }
 
     private void getRandomJoke() {
-        mLoadingSpinner.showLoadingSpinner();
-        OkHttpClient client = new OkHttpClient();
-        HttpUrl url = HttpUrl.get(ApiReference.ALL_JOKES_COUNT_URL);
-
-        ApiCalls.get(client, url, (responseCode, s) -> {
-            int maxJokeCount = JsonUtils.unpackTotalJokesCount(s);
-
-            // Removed ThreadLocalRandom() usage because the numbers weren't coming back
-            // random enough.  The same jokes were being displayed repeatedly.
-            // int randomJokeNumber = ThreadLocalRandom.current().nextInt(0, maxJokeCount);
-
-            Random r = new Random();
-            int randNum = r.nextInt(maxJokeCount);
-
-            mCurrentDisplayIndex = randNum;
-            getJoke(randNum);
+        ApiCalls.getRandomJokeItem(new ApiCalls.ApiCallback<JokeItem>() {
+            @Override
+            public void response(int responseCode, @Nullable JokeItem jokeItem) {
+                if (jokeItem != null) {
+                    showJoke(jokeItem.getJokeBody());
+                }
+            }
         });
     }
 }
