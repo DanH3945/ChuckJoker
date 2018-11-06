@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DatabaseThreadManager.getManager().initDatabaseThread();
+//        DatabaseThreadManager.getManager().initDatabaseThread();
 
 //        mJokeRepository = JokeRepository.initRepository(this);
 
