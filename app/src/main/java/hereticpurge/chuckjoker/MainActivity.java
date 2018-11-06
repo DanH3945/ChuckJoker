@@ -40,12 +40,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-//        DatabaseThreadManager.getManager().initDatabaseThread();
-
-//        mJokeRepository = JokeRepository.initRepository(this);
-
+        // TIMBER MUST BE THE FIRST THING LOADED TO HANDLE DEBUGGING CORRECTLY
+        // NOTHING GOES ABOVE THIS COMMENT
         if (BuildConfig.DEBUG) {
             // Timber debug tree
             Timber.plant(new Timber.DebugTree());
@@ -53,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
             // Timber Release Tree
             Timber.plant(new TimberReleaseTree());
         }
+        // END OF REQUIRED TIMBER LOAD
+
+        setContentView(R.layout.activity_main);
+
+//        DatabaseThreadManager.getManager().initDatabaseThread();
+
+//        mJokeRepository = JokeRepository.initRepository(this);
 
         if (savedInstanceState == null) {
             loadFragment(getJokeDisplayFragment(), false, null);
