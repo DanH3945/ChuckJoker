@@ -4,6 +4,7 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +21,7 @@ import java.util.Date;
 import hereticpurge.chuckjoker.database.DatabaseThreadManager;
 import hereticpurge.chuckjoker.fragments.AboutDialogFragment;
 import hereticpurge.chuckjoker.fragments.JokeDisplayFragment;
+import hereticpurge.chuckjoker.fragments.PreferenceFragment;
 import hereticpurge.chuckjoker.jsonutils.JsonUtils;
 import hereticpurge.chuckjoker.icndb.ApiCalls;
 import hereticpurge.chuckjoker.icndb.ApiReference;
@@ -100,6 +102,10 @@ public class MainActivity extends AppCompatActivity {
         return JokeDisplayFragment.createInstance();
     }
 
+    private PreferenceFragment getPreferenceFragment() {
+        return new PreferenceFragment();
+    }
+
     private void loadFragment(Fragment fragment, boolean addToBackStack, String tag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -172,6 +178,10 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.overflow_menu_about:
                 new AboutDialogFragment().show(getSupportFragmentManager(), null);
+                break;
+
+            case R.id.overflow_menu_preferences:
+                loadFragment(getPreferenceFragment(), true, PreferenceFragment.TAG);
                 break;
         }
         return super.onOptionsItemSelected(item);

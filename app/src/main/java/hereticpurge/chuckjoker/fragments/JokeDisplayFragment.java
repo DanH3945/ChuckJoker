@@ -2,6 +2,7 @@ package hereticpurge.chuckjoker.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,21 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
-import java.util.Random;
-
-import hereticpurge.chuckjoker.BuildConfig;
 import hereticpurge.chuckjoker.ChuckJokerApplication;
 import hereticpurge.chuckjoker.fragments.fragmentutils.LoadingSpinner;
 import hereticpurge.chuckjoker.R;
-import hereticpurge.chuckjoker.jsonutils.JsonUtils;
 import hereticpurge.chuckjoker.icndb.ApiCalls;
-import hereticpurge.chuckjoker.icndb.ApiReference;
-import hereticpurge.chuckjoker.model.JokeItem;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
 import timber.log.Timber;
 
 public class JokeDisplayFragment extends Fragment {
@@ -69,10 +61,7 @@ public class JokeDisplayFragment extends Fragment {
         mJokeBodyTextView = view.findViewById(R.id.joke_display_joke_body_text);
         mCurrentJokeNumText = view.findViewById(R.id.joke_display_joke_number_text);
 
-        if (BuildConfig.DEBUG) {
-            // Todo setup shared preferences for this option
-            mCurrentJokeNumText.setVisibility(View.VISIBLE);
-        }
+        initWithPreferences();
 
         mRandomJokeButton = view.findViewById(R.id.joke_display_fragment_random_joke_button);
         mRandomJokeButton.setOnClickListener(v -> getRandomJoke());
@@ -87,6 +76,14 @@ public class JokeDisplayFragment extends Fragment {
         }
 
         return view;
+    }
+
+    private void initWithPreferences() {
+        String jokeNumKey = getResources().getString(R.string.pref_show_joke_num_key);
+        if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(jokeNumKey, false)) {
+            mCurrentJokeNumText.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
