@@ -148,8 +148,8 @@ public class JokeDisplayFragment extends Fragment {
             Handler handler = new Handler(getActivity().getMainLooper());
             handler.post(() -> {
                 if (jokeItem != null) {
-                    showJoke(jokeItem.getJokeBody());
                     mCurrentDisplayIndex = jokeItem.getId();
+                    showJoke(jokeItem.getJokeBody());
                 }
             });
         });
