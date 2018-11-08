@@ -54,10 +54,17 @@ public final class ApiCalls {
         get(client, url, (responseCode, s) -> paramCallback.response(responseCode, JsonUtils.unpackJoke(s)));
     }
 
-    public static void getRandomJokeItem(ApiCallback<JokeItem> callback) {
+    public static void getRandomJokeItem(ApiCallback<JokeItem> paramCallback) {
         OkHttpClient client = new OkHttpClient();
         HttpUrl url = HttpUrl.get(ApiReference.RANDOM_JOKE_URL);
 
-        get(client, url, (responseCode, s) -> callback.response(responseCode, JsonUtils.unpackJoke(s)));
+        get(client, url, (responseCode, s) -> paramCallback.response(responseCode, JsonUtils.unpackJoke(s)));
+    }
+
+    public static void getTotalJokes(ApiCallback<Integer> paramCallback) {
+        OkHttpClient client = new OkHttpClient();
+        HttpUrl url = HttpUrl.get(ApiReference.ALL_JOKES_COUNT_URL);
+
+        get(client, url, (responseCode, s) -> paramCallback.response(responseCode, JsonUtils.unpackTotalJokesCount(s)));
     }
 }

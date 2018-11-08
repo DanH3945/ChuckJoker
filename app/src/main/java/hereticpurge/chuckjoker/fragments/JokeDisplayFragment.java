@@ -32,6 +32,8 @@ public class JokeDisplayFragment extends Fragment {
 
     private int DEFAULT_INDEX = 1;
 
+    private int mTotalJokesAvailable = 0;
+
     private String INDEX_SAVE_KEY = "indexSaveKey";
 
     private LoadingSpinner mLoadingSpinner;
@@ -61,7 +63,8 @@ public class JokeDisplayFragment extends Fragment {
         mJokeBodyTextView = view.findViewById(R.id.joke_display_joke_body_text);
         mCurrentJokeNumText = view.findViewById(R.id.joke_display_joke_number_text);
 
-        initWithPreferences();
+        initCheckPreferences();
+        initGetTotalJokes();
 
         mRandomJokeButton = view.findViewById(R.id.joke_display_fragment_random_joke_button);
         mRandomJokeButton.setOnClickListener(v -> getRandomJoke());
@@ -78,7 +81,18 @@ public class JokeDisplayFragment extends Fragment {
         return view;
     }
 
-    private void initWithPreferences() {
+    private void initGetTotalJokes() {
+        ApiCalls.getTotalJokes(new ApiCalls.ApiCallback<Integer>() {
+            @Override
+            public void response(int responseCode, @Nullable Integer integer) {
+                if (integer != null) {
+                    mTotalJokesAvailable = integer;
+                }
+            }
+        });
+    }
+
+    private void initCheckPreferences() {
         String jokeNumKey = getResources().getString(R.string.pref_show_joke_num_key);
         if (PreferenceManager.getDefaultSharedPreferences(getContext()).getBoolean(jokeNumKey, false)) {
             mCurrentJokeNumText.setVisibility(View.VISIBLE);
@@ -132,12 +146,13 @@ public class JokeDisplayFragment extends Fragment {
         ApiCalls.getSingleJokeItem(jokeNum, (responseCode, jokeItem) -> {
             Handler handler = new Handler(getActivity().getMainLooper());
             handler.post(() -> {
+                mCurrentDisplayIndex = jokeNum;
+
                 if (jokeItem != null) {
                     showJoke(jokeItem.getJokeBody());
                 } else {
-                    // Given joke number on the API returned null so it probably doesn't exist.
-                    // Instead we increment the current index and display the next joke in line.
-                    getJoke(++mCurrentDisplayIndex);
+                    // Show error message since we couldn't load a proper joke.
+                    showJoke(getActivity().getResources().getString(R.string.joke_error_missing_joke));
                 }
             });
         });
