@@ -175,17 +175,10 @@ public class JokeDisplayFragment extends Fragment {
 
     class SimpleSwipeListener implements View.OnTouchListener {
 
-        // I wanted to try implementing my own swipe listener instead of using an existing one as
-        // a demo.
-
-        // start by creating variable to hold position information of clicks.
         private float xStart = 0;
         private float xStop = 0;
         private float yStart = 0;
         private float yStop = 0;
-
-        // the following 2 variables are used to prevent the listener from registering swipe events
-        // when the user may not mean to swipe.  Random screen touches etc.
 
         // the min distance a user must swipe across the screen for this listener to register it as
         // a swipe.
@@ -202,7 +195,6 @@ public class JokeDisplayFragment extends Fragment {
             // that an event occured and where.
             // v.performClick();
 
-            // basic math stuff for working on an x,y grid.
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     // store the starting position
@@ -217,7 +209,7 @@ public class JokeDisplayFragment extends Fragment {
                     xStop = event.getX();
                     yStop = event.getY();
 
-                    // getting the absolute values to determine swipe length.
+                    // getting the absolute values to determine swipe distance.
                     float xTrans = Math.abs(xStop - xStart);
                     float yTrans = Math.abs(yStop - yStart);
 
