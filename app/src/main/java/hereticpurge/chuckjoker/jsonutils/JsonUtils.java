@@ -4,9 +4,6 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Date;
 
 import hereticpurge.chuckjoker.model.JokeItem;
@@ -18,19 +15,16 @@ public final class JsonUtils {
 
     public static @Nullable
     JokeItem unpackJoke(String jsonString) {
-        try {
-            JSONObject baseObject = new JSONObject(jsonString);
-            if (baseObject.getString("type").equalsIgnoreCase("Success")) {
-                JSONObject jsonObject = baseObject.getJSONObject("value");
-                JokeItem jokeItem = new JokeItem();
-                jokeItem.setDateAdded(new Date());
-                jokeItem.setId(Integer.parseInt(jsonObject.getString("id")));
-                jokeItem.setJokeBody(jsonObject.getString("joke"));
-                return jokeItem;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Timber.d("Json Exception Thrown");
+        Gson gson = new Gson();
+
+        JokeItemGsonResult gsonResult = gson.fromJson(jsonString, JokeItemGsonResult.class);
+
+        if (gsonResult.type.equals("success")) {
+            JokeItem jokeItem = new JokeItem();
+            jokeItem.setJokeBody(gsonResult.getJokeBody());
+            jokeItem.setId(Integer.valueOf(gsonResult.getJokeId()));
+            jokeItem.setDateAdded(new Date());
+            return jokeItem;
         }
         return null;
     }
