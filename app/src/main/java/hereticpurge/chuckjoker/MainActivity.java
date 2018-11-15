@@ -1,10 +1,6 @@
 package hereticpurge.chuckjoker;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,21 +12,10 @@ import android.view.View;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import java.util.Date;
-
-import hereticpurge.chuckjoker.database.DatabaseThreadManager;
 import hereticpurge.chuckjoker.fragments.AboutDialogFragment;
 import hereticpurge.chuckjoker.fragments.JokeDisplayFragment;
 import hereticpurge.chuckjoker.fragments.PreferenceFragment;
-import hereticpurge.chuckjoker.jsonutils.JsonUtils;
-import hereticpurge.chuckjoker.icndb.ApiCalls;
-import hereticpurge.chuckjoker.icndb.ApiReference;
 import hereticpurge.chuckjoker.logging.TimberReleaseTree;
-import hereticpurge.chuckjoker.model.JokeItem;
-import hereticpurge.chuckjoker.model.JokeRepository;
-import hereticpurge.chuckjoker.model.JokeViewModel;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
