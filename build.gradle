@@ -17,6 +17,7 @@ buildscript {
         okhttpVersion = '3.11.0'
         rxjavaAndroidVersion = '2.1.0'
         rxjavaVersion = '2.2.2'
+        retrofitVersion = '2.1.0'
     }
     
     repositories {
