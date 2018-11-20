@@ -217,7 +217,11 @@ public class JokeDisplayFragment extends Fragment {
                     if (xTrans > SWIPE_X_MIN_DISTANCE && yTrans < SWIPE_Y_MAX_DISTANCE) {
                         if (xStart > xStop) {
                             Timber.d("Swipe from right to left");
-                            getJoke(++mCurrentDisplayIndex);
+                            if (JokeDisplayFragment.this.mCurrentDisplayIndex <
+                                    JokeDisplayFragment.this.mTotalJokesAvailable) {
+
+                                getJoke(++mCurrentDisplayIndex);
+                            }
                         } else {
                             Timber.d("Swipe from left to right");
                             getJoke(--mCurrentDisplayIndex);

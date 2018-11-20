@@ -29,16 +29,15 @@ public final class JsonUtils {
         return null;
     }
 
-    public static int unpackTotalJokesCount(String jsonString) {
+    @Nullable
+    public static Integer unpackTotalJokesCount(String jsonString) {
         Gson gson = new Gson();
         JokeTotalCountGsonObject countObject = gson.fromJson(jsonString, JokeTotalCountGsonObject.class);
-        int returnValue;
         try {
-            returnValue = Integer.valueOf(countObject.value);
+            return Integer.valueOf(countObject.value);
         } catch (NullPointerException | NumberFormatException e) {
-            returnValue = UNPACK_FAILED;
             Timber.d("Null Pointer Exception while trying to unpack countObject.value() : %s", countObject.value);
+            return null;
         }
-        return returnValue;
     }
 }
