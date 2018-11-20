@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         // change the layer type for the entire view since i'm only trying to load test ads on a demo.
         // https://stackoverflow.com/questions/9366365/android-admob-admob-ad-refresh-destroys-frame-rate
         mAdView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
     }
 
     @Override
