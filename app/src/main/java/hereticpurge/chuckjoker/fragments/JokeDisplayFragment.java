@@ -1,7 +1,6 @@
 package hereticpurge.chuckjoker.fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,7 +18,16 @@ import com.google.android.gms.analytics.Tracker;
 import hereticpurge.chuckjoker.ChuckJokerApplication;
 import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.fragments.fragmentutils.LoadingSpinner;
-import hereticpurge.chuckjoker.icndb.ApiCalls;
+import hereticpurge.chuckjoker.icndb.ApiClient;
+import hereticpurge.chuckjoker.icndb.ApiJokeCountItem;
+import hereticpurge.chuckjoker.icndb.ApiJokeItem;
+import hereticpurge.chuckjoker.icndb.ApiReference;
+import hereticpurge.chuckjoker.model.JokeItem;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
 public class JokeDisplayFragment extends Fragment {
@@ -38,6 +46,8 @@ public class JokeDisplayFragment extends Fragment {
     private String INDEX_SAVE_KEY = "indexSaveKey";
 
     private LoadingSpinner mLoadingSpinner;
+
+    ApiClient mApiClient;
 
     private Tracker mTracker;
     private static final String TAG = "JokeDisplayFragment";
@@ -60,6 +70,12 @@ public class JokeDisplayFragment extends Fragment {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiReference.ICNDB_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        mApiClient = retrofit.create(ApiClient.class);
 
         mJokeBodyTextView = view.findViewById(R.id.joke_display_joke_body_text);
         mCurrentJokeNumText = view.findViewById(R.id.joke_display_joke_number_text);
@@ -85,12 +101,16 @@ public class JokeDisplayFragment extends Fragment {
     }
 
     private void initGetTotalJokes() {
-        ApiCalls.getTotalJokes(new ApiCalls.ApiCallback<Integer>() {
+        Call<ApiJokeCountItem> call = mApiClient.getJokecount();
+        call.enqueue(new Callback<ApiJokeCountItem>() {
             @Override
-            public void response(int responseCode, @Nullable Integer integer) {
-                if (integer != null) {
-                    mTotalJokesAvailable = integer;
-                }
+            public void onResponse(Call<ApiJokeCountItem> call, Response<ApiJokeCountItem> response) {
+                mTotalJokesAvailable = response.body().getValue();
+            }
+
+            @Override
+            public void onFailure(Call<ApiJokeCountItem> call, Throwable t) {
+                Timber.d(t);
             }
         });
     }
@@ -146,30 +166,42 @@ public class JokeDisplayFragment extends Fragment {
 
     private void getJoke(int jokeNum) {
         mLoadingSpinner.showLoadingSpinner();
-        ApiCalls.getSingleJokeItem(jokeNum, (responseCode, jokeItem) -> {
-            Handler handler = new Handler(getActivity().getMainLooper());
-            handler.post(() -> {
-                mCurrentDisplayIndex = jokeNum;
+        Call<ApiJokeItem> call = mApiClient.getJoke(String.valueOf(jokeNum));
+        call.enqueue(new Callback<ApiJokeItem>() {
+            @Override
+            public void onResponse(Call<ApiJokeItem> call, Response<ApiJokeItem> response) {
+                JokeItem jokeItem = response.body().getValue();
 
                 if (jokeItem != null) {
-                    showJoke(jokeItem.getJokeBody());
-                } else {
-                    // Show error message since we couldn't load a proper joke.
-                    showJoke(getActivity().getResources().getString(R.string.joke_error_missing_joke));
+                    mCurrentDisplayIndex = jokeItem.getId();
+                    showJoke(jokeItem.getJoke());
                 }
-            });
+            }
+
+            @Override
+            public void onFailure(Call<ApiJokeItem> call, Throwable t) {
+                Timber.d(t);
+            }
         });
     }
 
     private void getRandomJoke() {
-        ApiCalls.getRandomJokeItem((responseCode, jokeItem) -> {
-            Handler handler = new Handler(getActivity().getMainLooper());
-            handler.post(() -> {
+        Call<ApiJokeItem> call = mApiClient.getRandomJoke();
+        call.enqueue(new Callback<ApiJokeItem>() {
+            @Override
+            public void onResponse(Call<ApiJokeItem> call, Response<ApiJokeItem> response) {
+                JokeItem jokeItem = response.body().getValue();
+
                 if (jokeItem != null) {
                     mCurrentDisplayIndex = jokeItem.getId();
-                    showJoke(jokeItem.getJokeBody());
+                    showJoke(jokeItem.getJoke());
                 }
-            });
+            }
+
+            @Override
+            public void onFailure(Call<ApiJokeItem> call, Throwable t) {
+                Timber.d(t);
+            }
         });
     }
 
