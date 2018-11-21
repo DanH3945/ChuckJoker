@@ -44,6 +44,10 @@
     <string name="about_okhttp_url">http://square.github.io/okhttp/</string>
     <string name="about_okhttp_copyright">Copyright 2016 Square, Inc.</string>
 
+    <string name="about_backing_api_title">Backing Api:</string>
+    <string name="about_backing_api_url">http://www.icndb.com</string>
+
+
     // Shared Preference Strings
     <string name="pref_show_joke_num_key">showJokeNumberKey</string>
     <string name="pref_show_joke_num_summary">Display the ID number of the current joke</string>

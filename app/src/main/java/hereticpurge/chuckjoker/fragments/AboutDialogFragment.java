@@ -2,11 +2,14 @@ package hereticpurge.chuckjoker.fragments;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.view.ContextThemeWrapper;
+import android.view.View;
 import android.widget.TextView;
 
 import de.psdev.licensesdialog.LicensesDialog;
@@ -62,6 +65,25 @@ public class AboutDialogFragment extends AppCompatDialogFragment {
 
         TextView okhttpText = dialog.findViewById(R.id.about_okhttp_tv);
         okhttpText.setOnClickListener(v -> showOkhttpLicense());
+
+        TextView backingApiTextView = dialog.findViewById(R.id.about_backing_api_link_tv);
+        backingApiTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = backingApiTextView.getText().toString();
+                Uri uri = Uri.parse(url);
+
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                try {
+                    if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                        startActivity(intent);
+                    }
+                } catch (NullPointerException e) {
+                    Timber.d(e);
+                }
+
+            }
+        });
 
         return dialog;
     }

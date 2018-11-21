@@ -80,5 +80,25 @@
         android:text="@string/about_okhttp_license_title"
         android:textColor="@color/httpLinkBlue" />
 
+    <View style="@style/DividerStyle"
+        android:layout_margin="16dp"/>
+
+    <TextView
+        android:id="@+id/about_backing_api_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/about_backing_api_title"/>
+
+    <TextView
+        android:id="@+id/about_backing_api_link_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/about_item_height"
+        android:layout_margin="@dimen/about_item_margin"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/about_backing_api_url"
+        android:textColor="@color/httpLinkBlue" />
+
 
 </LinearLayout>
