@@ -7,6 +7,7 @@ import android.content.Context;
 
 import hereticpurge.chuckjoker.model.JokeItem;
 
+@Deprecated
 @Database(entities = {JokeItem.class}, version = 1)
 public abstract class JokeDatabase extends RoomDatabase {
 

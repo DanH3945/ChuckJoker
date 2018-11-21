@@ -6,6 +6,7 @@ import java.util.Date;
 
 // Class for converting Date objects into long values and vice versa to be stored in the database.
 
+@Deprecated
 public class DateConverter {
 
     @TypeConverter

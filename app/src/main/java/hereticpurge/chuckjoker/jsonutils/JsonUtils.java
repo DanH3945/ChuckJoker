@@ -9,6 +9,7 @@ import java.util.Date;
 import hereticpurge.chuckjoker.model.JokeItem;
 import timber.log.Timber;
 
+@Deprecated
 public final class JsonUtils {
 
     public static final int UNPACK_FAILED = -1;

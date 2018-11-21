@@ -11,6 +11,7 @@ import java.util.List;
 
 import hereticpurge.chuckjoker.model.JokeItem;
 
+@Deprecated
 @Dao
 public interface JokeDao {
 

@@ -14,6 +14,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import timber.log.Timber;
 
+@Deprecated
 public final class ApiCalls {
 
     private ApiCalls() {

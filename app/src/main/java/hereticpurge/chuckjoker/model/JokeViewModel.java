@@ -11,6 +11,7 @@ import java.util.List;
 import hereticpurge.chuckjoker.database.DatabaseThreadManager;
 import hereticpurge.chuckjoker.database.JokeDatabase;
 
+@Deprecated
 public class JokeViewModel extends AndroidViewModel {
 
     private JokeDatabase jokeDatabase;

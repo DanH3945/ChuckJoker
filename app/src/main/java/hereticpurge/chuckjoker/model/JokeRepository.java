@@ -12,6 +12,7 @@ import java.util.List;
 
 import timber.log.Timber;
 
+@Deprecated
 public class JokeRepository implements LifecycleOwner {
 
     private LifecycleOwner parent;

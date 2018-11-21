@@ -10,6 +10,7 @@ import java.util.Date;
 
 import hereticpurge.chuckjoker.database.converters.DateConverter;
 
+@Deprecated
 @Entity
 @TypeConverters({DateConverter.class})
 public class JokeItem {

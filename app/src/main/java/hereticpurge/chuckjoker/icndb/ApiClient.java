@@ -7,8 +7,8 @@ import retrofit2.http.Path;
 
 public interface ApiClient {
 
-    @GET(ApiReference.ICNDB_BASE_URL + "{url}")
-    Call<JokeItem> getJoke(@Path("url") String url);
+    @GET(ApiReference.SINGLE_JOKE_URL + "{jokeNum}")
+    Call<JokeItem> getJoke(@Path("jokeNum") String jokeNum);
 
 
 }

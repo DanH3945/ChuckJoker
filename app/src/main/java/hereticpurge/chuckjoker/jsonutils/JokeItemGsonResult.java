@@ -1,5 +1,6 @@
 package hereticpurge.chuckjoker.jsonutils;
 
+@Deprecated
 public class JokeItemGsonResult {
 
     public String type;
