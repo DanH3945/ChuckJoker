@@ -7,14 +7,14 @@
 
     <item
         android:id="@+id/overflow_menu_preferences"
-        android:title="@string/menu_preferences_title"/>
+        android:title="@string/menu_preferences_title" />
 
     <!--<item-->
-        <!--android:id="@+id/overflow_menu_debug_add_joke"-->
-        <!--android:title="@string/debug_add_debug_joke" />-->
+    <!--android:id="@+id/overflow_menu_debug_add_joke"-->
+    <!--android:title="@string/debug_add_debug_joke" />-->
 
     <!--<item-->
-        <!--android:id="@+id/overflow_menu_wipe_database"-->
-        <!--android:title="@string/debug_wipe_database" />-->
+    <!--android:id="@+id/overflow_menu_wipe_database"-->
+    <!--android:title="@string/debug_wipe_database" />-->
 
 </menu>

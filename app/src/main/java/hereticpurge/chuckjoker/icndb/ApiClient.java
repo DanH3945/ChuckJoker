@@ -1,7 +1,5 @@
 package hereticpurge.chuckjoker.icndb;
 
-import java.util.List;
-
 import hereticpurge.chuckjoker.model.JokeItem;
 import retrofit2.Call;
 import retrofit2.http.GET;
