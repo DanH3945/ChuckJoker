@@ -4,7 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="dividerColor">#9b9b9b</color>
+    <color name="white">#ffffff</color>
 
     // Dialog Colors
     <color name="httpLinkBlue">#0000EE</color>
+
+    // Button Colors
+    <color name="buttonBlack">#212121</color>
 </resources>

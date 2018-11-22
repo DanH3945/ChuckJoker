@@ -10,4 +10,7 @@
     <dimen name="about_item_height">32dp</dimen>
     <dimen name="about_item_margin">8dp</dimen>
 
+    // Button Dimens
+    <dimen name="swipe_button_dimen">64dp</dimen>
+
 </resources>

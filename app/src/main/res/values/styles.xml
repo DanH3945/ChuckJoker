@@ -14,4 +14,11 @@
         <item name="android:background">@color/dividerColor</item>
         <item name="android:importantForAccessibility">no</item>
     </style>
+
+    <style name="SwipeButtonStyle">
+        <item name="android:background">@drawable/circle_swipe_button</item>
+        <item name="android:layout_height">@dimen/swipe_button_dimen</item>
+        <item name="android:layout_width">@dimen/swipe_button_dimen</item>
+    </style>
+
 </resources>
