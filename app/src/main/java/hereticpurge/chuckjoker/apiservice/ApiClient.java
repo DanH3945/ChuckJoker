@@ -1,4 +1,4 @@
-package hereticpurge.chuckjoker.icndb;
+package hereticpurge.chuckjoker.apiservice;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

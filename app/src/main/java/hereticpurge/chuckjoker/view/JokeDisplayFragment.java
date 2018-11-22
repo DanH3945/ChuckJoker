@@ -1,4 +1,4 @@
-package hereticpurge.chuckjoker.fragments;
+package hereticpurge.chuckjoker.view;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -17,11 +17,11 @@ import com.google.android.gms.analytics.Tracker;
 
 import hereticpurge.chuckjoker.ChuckJokerApplication;
 import hereticpurge.chuckjoker.R;
-import hereticpurge.chuckjoker.fragments.fragmentutils.LoadingSpinner;
-import hereticpurge.chuckjoker.icndb.ApiClient;
-import hereticpurge.chuckjoker.icndb.ApiJokeCountItem;
-import hereticpurge.chuckjoker.icndb.ApiJokeItem;
-import hereticpurge.chuckjoker.icndb.ApiReference;
+import hereticpurge.chuckjoker.view.viewutils.LoadingSpinner;
+import hereticpurge.chuckjoker.apiservice.ApiClient;
+import hereticpurge.chuckjoker.apiservice.ApiJokeCountItem;
+import hereticpurge.chuckjoker.apiservice.ApiJokeItem;
+import hereticpurge.chuckjoker.apiservice.ApiReference;
 import hereticpurge.chuckjoker.model.JokeItem;
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,4 +1,4 @@
-package hereticpurge.chuckjoker.icndb;
+package hereticpurge.chuckjoker.apiservice;
 
 public class ApiJokeCountItem {
 

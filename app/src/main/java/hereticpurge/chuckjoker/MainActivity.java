@@ -12,9 +12,9 @@ import android.view.View;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
-import hereticpurge.chuckjoker.fragments.AboutDialogFragment;
-import hereticpurge.chuckjoker.fragments.JokeDisplayFragment;
-import hereticpurge.chuckjoker.fragments.PreferenceFragment;
+import hereticpurge.chuckjoker.view.AboutDialogFragment;
+import hereticpurge.chuckjoker.view.JokeDisplayFragment;
+import hereticpurge.chuckjoker.view.PreferenceFragment;
 import hereticpurge.chuckjoker.logging.TimberReleaseTree;
 import timber.log.Timber;
 

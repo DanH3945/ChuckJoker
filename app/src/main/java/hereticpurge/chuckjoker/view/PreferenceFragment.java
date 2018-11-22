@@ -1,4 +1,4 @@
-package hereticpurge.chuckjoker.fragments;
+package hereticpurge.chuckjoker.view;
 
 import android.os.Bundle;
 import android.support.v7.preference.PreferenceFragmentCompat;

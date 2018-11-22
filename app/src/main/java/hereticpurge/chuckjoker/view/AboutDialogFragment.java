@@ -1,4 +1,4 @@
-package hereticpurge.chuckjoker.fragments;
+package hereticpurge.chuckjoker.view;
 
 import android.app.Dialog;
 import android.content.Context;
