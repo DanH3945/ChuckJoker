@@ -61,7 +61,7 @@ public class JokeDisplayFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.joke_display_fragment_layout, container, false);
 
-        this.setRetainInstance(true);
+        setRetainInstance(true);
 
         mCurrentDisplayIndex = DEFAULT_INDEX;
 
@@ -101,7 +101,7 @@ public class JokeDisplayFragment extends Fragment {
     }
 
     private void initGetTotalJokes() {
-        Call<ApiJokeCountItem> call = mApiClient.getJokecount();
+        Call<ApiJokeCountItem> call = mApiClient.getJokeCount();
         call.enqueue(new Callback<ApiJokeCountItem>() {
             @Override
             public void onResponse(Call<ApiJokeCountItem> call, Response<ApiJokeCountItem> response) {
@@ -132,6 +132,11 @@ public class JokeDisplayFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         try {
@@ -147,8 +152,8 @@ public class JokeDisplayFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
         outState.putInt(INDEX_SAVE_KEY, mCurrentDisplayIndex);
+        super.onSaveInstanceState(outState);
     }
 
     private boolean showJoke(String jokeBody) {
@@ -162,6 +167,14 @@ public class JokeDisplayFragment extends Fragment {
         mJokeBodyTextView.setText(getActivity().getResources().getString(R.string.joke_body_error));
         mLoadingSpinner.hideLoadingSpinner();
         return false;
+    }
+
+    private void returnToFirstJoke() {
+        getJoke(1);
+    }
+
+    private void moveToJoke(int num) {
+        getJoke(num);
     }
 
     private void getJoke(int jokeNum) {
@@ -256,7 +269,9 @@ public class JokeDisplayFragment extends Fragment {
                             }
                         } else {
                             Timber.d("Swipe from left to right");
-                            getJoke(--mCurrentDisplayIndex);
+                            if (mCurrentDisplayIndex > 1) {
+                                getJoke(--mCurrentDisplayIndex);
+                            }
                         }
                     }
                     Timber.d("----------  MOTION EVENT BREAK  ----------");

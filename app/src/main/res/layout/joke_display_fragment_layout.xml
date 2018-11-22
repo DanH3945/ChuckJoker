@@ -17,19 +17,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.9" />
 
-    <Button
-        android:id="@+id/joke_display_fragment_check_new_jokes_button"
-        android:layout_width="@dimen/joke_display_fragment_button_width"
-        android:layout_height="@dimen/joke_display_fragment_button_height"
-        android:layout_margin="@dimen/joke_display_fragment_button_margin"
-        android:onClick="checkForNewJokes"
-        android:text="@string/joke_display_fragment_check_new_button_text"
-        android:textSize="@dimen/joke_display_fragment_button_text_size"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/joke_display_fragment_random_joke_button" />
-
     <TextView
         android:id="@+id/joke_display_joke_body_text"
         android:layout_width="match_parent"
@@ -47,11 +34,11 @@
         android:id="@+id/joke_display_joke_number_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/joke_display_fragment_random_joke_button"
         android:layout_marginBottom="16dp"
-        android:visibility="gone" />
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/joke_display_fragment_random_joke_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -13,6 +13,6 @@ public interface ApiClient {
     Call<ApiJokeItem> getRandomJoke();
 
     @GET(ApiReference.ALL_JOKES_COUNT_URL)
-    Call<ApiJokeCountItem> getJokecount();
+    Call<ApiJokeCountItem> getJokeCount();
 
 }
