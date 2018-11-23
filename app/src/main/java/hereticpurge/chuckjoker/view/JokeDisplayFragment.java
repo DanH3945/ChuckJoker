@@ -98,18 +98,18 @@ public class JokeDisplayFragment extends Fragment {
         view.setOnTouchListener(new SimpleSwipeListener(new SimpleSwipeListener.Callback() {
             @Override
             public void onSwipeLeftToRight() {
-                if (mCurrentDisplayIndex > 1) {
-                    getJoke(--mCurrentDisplayIndex);
-                }
+                previousJoke();
             }
 
             @Override
             public void onSwipeRightToLeft() {
-                if (mCurrentDisplayIndex < mTotalJokesAvailable) {
-                    getJoke(++mCurrentDisplayIndex);
-                }
+                nextJoke();
             }
         }));
+
+        view.findViewById(R.id.joke_display_next_joke_button).setOnClickListener(v -> nextJoke());
+
+        view.findViewById(R.id.joke_display_previous_joke_button).setOnClickListener(v -> previousJoke());
 
         return view;
     }
@@ -173,8 +173,9 @@ public class JokeDisplayFragment extends Fragment {
     private boolean showJoke(String jokeBody) {
         // Boolean return values here just in case they are needed later.
         if (jokeBody != null && !jokeBody.equals("")) {
+            String jokeBodyFormatted = jokeBody.replace("&quot;", "\"");
             mCurrentJokeNumText.setText(String.valueOf(mCurrentDisplayIndex));
-            mJokeBodyTextView.setText(jokeBody);
+            mJokeBodyTextView.setText(jokeBodyFormatted);
             mLoadingSpinner.hideLoadingSpinner();
             return true;
         }
@@ -189,6 +190,18 @@ public class JokeDisplayFragment extends Fragment {
 
     private void moveToJoke(int num) {
         getJoke(num);
+    }
+
+    private void nextJoke() {
+        if (mCurrentDisplayIndex < mTotalJokesAvailable) {
+            getJoke(++mCurrentDisplayIndex);
+        }
+    }
+
+    private void previousJoke() {
+        if (mCurrentDisplayIndex > 1) {
+            getJoke(--mCurrentDisplayIndex);
+        }
     }
 
     private void getJoke(int jokeNum) {
