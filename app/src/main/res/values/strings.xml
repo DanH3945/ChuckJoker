@@ -7,6 +7,7 @@
     // Error Strings
     <string name="joke_body_error">Couldn\'t load joke</string>
     <string name="joke_error_missing_joke">Whoops!! This joke number does not appear to have a joke in the database.</string>
+    <string name="joke_error_number_format_exception">Whoops!! Please enter a number.</string>
 
     // Debug Strings
     <string name="debug_wipe_database">Debug Wipe Database</string>

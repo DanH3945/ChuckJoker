@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.analytics.Tracker;
 
@@ -111,6 +113,28 @@ public class JokeDisplayFragment extends Fragment {
 
         view.findViewById(R.id.joke_display_previous_joke_button).setOnClickListener(v -> previousJoke());
 
+        SearchView searchView = view.findViewById(R.id.joke_display_search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                try {
+                    int jokeNum = Integer.parseInt(query);
+                    searchView.clearFocus();
+                    searchView.setQuery("", false);
+                    moveToJoke(jokeNum);
+                    return true;
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getContext(), R.string.joke_error_number_format_exception, Toast.LENGTH_LONG).show();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
         return view;
     }
 
@@ -188,8 +212,13 @@ public class JokeDisplayFragment extends Fragment {
         getJoke(1);
     }
 
-    private void moveToJoke(int num) {
-        getJoke(num);
+    private void moveToJoke(int jokeNum) {
+        mCurrentDisplayIndex = jokeNum;
+        if (jokeNum < mTotalJokesAvailable && jokeNum > 0) {
+            getJoke(jokeNum);
+        } else {
+            missingJokeError();
+        }
     }
 
     private void nextJoke() {

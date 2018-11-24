@@ -4,6 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <SearchView
+        android:id="@+id/joke_display_search_view"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:iconifiedByDefault="false"
+        android:queryHint="Enter a joke number"/>
+
     <Button
         android:id="@+id/joke_display_fragment_random_joke_button"
         android:layout_width="@dimen/joke_display_fragment_button_width"
