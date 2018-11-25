@@ -14,8 +14,7 @@
     <string name="debug_add_debug_joke">Debug add debug joke</string>
 
     // Joke Display Fragment Strings
-    <string name="joke_display_fragment_joke_body_default_text">It looks like this is your first time running the app.  Give us a second to gather up some jokes!!</string>
-    <string name="joke_display_fragment_check_new_button_text">Check for new jokes</string>
+    <string name="joke_display_fragment_joke_body_default_text">Enter a joke number or push the button to grab a random joke.</string>
     <string name="joke_display_fragment_random_button_text">Get a random joke</string>
 
     // Ad Strings

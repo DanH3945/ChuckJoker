@@ -4,6 +4,7 @@
     <CheckBoxPreference
         android:key="@string/pref_show_joke_num_key"
         android:summary="@string/pref_show_joke_num_summary"
-        android:title="@string/pref_show_joke_num_title" />
+        android:title="@string/pref_show_joke_num_title"
+        android:defaultValue="true"/>
 
 </PreferenceScreen>
