@@ -59,30 +59,30 @@ public class JokeDisplayFragment extends Fragment implements Observer {
         initCheckPreferences();
 
         Button mRandomJokeButton = view.findViewById(R.id.joke_display_fragment_random_joke_button);
-        mRandomJokeButton.setOnClickListener(v -> mJokeController.loadRandomJoke());
+        mRandomJokeButton.setOnClickListener(v -> mJokeController.loadRandomJoke(getContext()));
 
         if (getActivity() != null) {
             // Google Analytics tracker.
             mTracker = ((ChuckJokerApplication) getActivity().getApplication()).getDefaultTracker();
         }
 
-        mJokeController = JokeController.getJokeController();
+        mJokeController = JokeController.getJokeController(getContext());
 
         view.setOnTouchListener(new SimpleSwipeListener(new SimpleSwipeListener.Callback() {
             @Override
             public void onSwipeLeftToRight() {
-                mJokeController.previousJoke();
+                mJokeController.previousJoke(getContext());
             }
 
             @Override
             public void onSwipeRightToLeft() {
-                mJokeController.nextJoke();
+                mJokeController.nextJoke(getContext());
             }
         }));
 
-        view.findViewById(R.id.joke_display_next_joke_button).setOnClickListener(v -> mJokeController.nextJoke());
+        view.findViewById(R.id.joke_display_next_joke_button).setOnClickListener(v -> mJokeController.nextJoke(getContext()));
 
-        view.findViewById(R.id.joke_display_previous_joke_button).setOnClickListener(v -> mJokeController.previousJoke());
+        view.findViewById(R.id.joke_display_previous_joke_button).setOnClickListener(v -> mJokeController.previousJoke(getContext()));
 
         SearchView searchView = view.findViewById(R.id.joke_display_search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -92,7 +92,7 @@ public class JokeDisplayFragment extends Fragment implements Observer {
                     int jokeNum = Integer.parseInt(query);
                     searchView.clearFocus();
                     searchView.setQuery("", false);
-                    mJokeController.loadJoke(jokeNum);
+                    mJokeController.loadJoke(getContext(), jokeNum);
                     return true;
                 } catch (NumberFormatException e) {
                     Toast.makeText(getContext(), R.string.joke_error_number_format_exception, Toast.LENGTH_LONG).show();

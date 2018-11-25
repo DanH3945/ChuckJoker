@@ -1,8 +1,11 @@
 package hereticpurge.chuckjoker.model;
 
+import android.content.Context;
+
 import java.util.Observable;
 import java.util.Observer;
 
+import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.apiservice.ApiClient;
 import hereticpurge.chuckjoker.apiservice.ApiJokeCountItem;
 import hereticpurge.chuckjoker.apiservice.ApiJokeItem;
@@ -14,7 +17,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
-public class JokeController extends Observable{
+public class JokeController extends Observable {
 
     private static JokeController sJokeController;
 
@@ -36,10 +39,10 @@ public class JokeController extends Observable{
         setTotalJokeCount();
     }
 
-    public static JokeController getJokeController() {
+    public static JokeController getJokeController(Context context) {
         if (sJokeController == null) {
             sJokeController = new JokeController();
-            sJokeController.loadJoke(1);
+            sJokeController.loadJoke(context, 1);
         }
         return sJokeController;
     }
@@ -67,51 +70,61 @@ public class JokeController extends Observable{
         return mCurrentJokeId;
     }
 
-    public void loadJoke(int id) {
+    public void loadJoke(Context context, int id) {
         Call<ApiJokeItem> call = mApiClient.getJoke(String.valueOf(id));
         call.enqueue(new Callback<ApiJokeItem>() {
             @Override
             public void onResponse(Call<ApiJokeItem> call, Response<ApiJokeItem> response) {
-                mCurrentJoke = response.body().getValue();
-                mCurrentJokeId = mCurrentJoke.getId();
-                setChanged();
-                notifyObservers(mCurrentJoke);
+                setCurrentJoke(response.body().getValue());
             }
 
             @Override
             public void onFailure(Call<ApiJokeItem> call, Throwable t) {
+                Timber.d("JOKE LOAD FAILURE");
+                JokeItem errorJokeItem = new JokeItem();
+                errorJokeItem.setId(id);
+                errorJokeItem.setJoke(context.getResources().getString(R.string.joke_error_missing_joke));
+                setCurrentJoke(errorJokeItem);
                 Timber.d(t);
             }
         });
     }
 
-    public void loadRandomJoke() {
+    public void loadRandomJoke(Context context) {
         Call<ApiJokeItem> call = mApiClient.getRandomJoke();
         call.enqueue(new Callback<ApiJokeItem>() {
             @Override
             public void onResponse(Call<ApiJokeItem> call, Response<ApiJokeItem> response) {
-                mCurrentJoke = response.body().getValue();
-                mCurrentJokeId = mCurrentJoke.getId();
-                setChanged();
-                notifyObservers(mCurrentJoke);
+                setCurrentJoke(response.body().getValue());
             }
 
             @Override
             public void onFailure(Call<ApiJokeItem> call, Throwable t) {
+                JokeItem errorJokeItem = new JokeItem();
+                errorJokeItem.setId(mCurrentJokeId);
+                errorJokeItem.setJoke(context.getResources().getString(R.string.joke_error_missing_joke));
+                setCurrentJoke(errorJokeItem);
                 Timber.d(t);
             }
         });
     }
 
-    public void nextJoke() {
+    private void setCurrentJoke(JokeItem jokeItem) {
+        mCurrentJoke = jokeItem;
+        mCurrentJokeId = mCurrentJoke.getId();
+        setChanged();
+        notifyObservers(mCurrentJoke);
+    }
+
+    public void nextJoke(Context context) {
         if (mCurrentJokeId < mTotalJokesAvailable) {
-            loadJoke(++mCurrentJokeId);
+            loadJoke(context, ++mCurrentJokeId);
         }
     }
 
-    public void previousJoke() {
+    public void previousJoke(Context context) {
         if (mCurrentJokeId > 1) {
-            loadJoke(--mCurrentJokeId);
+            loadJoke(context, --mCurrentJokeId);
         }
     }
 

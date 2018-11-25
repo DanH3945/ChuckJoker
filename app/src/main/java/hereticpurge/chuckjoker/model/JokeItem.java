@@ -18,4 +18,12 @@ public class JokeItem {
     public String[] getCategories() {
         return categories;
     }
+
+    protected void setId(int id) {
+        this.id = id;
+    }
+
+    protected void setJoke(String joke) {
+        this.joke = joke;
+    }
 }
