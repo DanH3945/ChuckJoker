@@ -1,6 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    signingConfigs {
+        // For demonstration purposes only.  NOT A SECURE KEYSTORE - DO NOT USE FOR RELEASE
+        release {
+            keyAlias '...'
+            keyPassword '...'
+            storeFile file('...')
+            storePassword '...'
+        }
+    }
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "hereticpurge.chuckjoker"
