@@ -142,9 +142,9 @@ public class JokeDisplayFragment extends Fragment implements Observer {
         int jokeNumber = jokeItem.getId();
 
         if (jokeBody != null && !jokeBody.equals("")) {
-            String jokeBodyFormatted = jokeBody.replace("&quot;", "\"");
+            String jokeBodyFromHtml = android.text.Html.fromHtml(jokeBody).toString();
             mCurrentJokeNumText.setText(String.valueOf(jokeNumber));
-            mJokeBodyTextView.setText(jokeBodyFormatted);
+            mJokeBodyTextView.setText(jokeBodyFromHtml);
             mLoadingSpinner.hideLoadingSpinner();
             return;
         }
