@@ -18,12 +18,12 @@ public class SimpleSwipeListener implements View.OnTouchListener {
 
     // the min distance a user must swipe across the screen for this listener to register it as
     // a swipe.
-    private static final float SWIPE_X_MIN_DISTANCE_DEFAULT = 200;
+    public static final float SWIPE_X_MIN_DISTANCE_DEFAULT = 200;
     private float swipeXMinDistance;
 
     // the max y distance (up / down) a user is allowed to press before the event won't be
     // recognized.
-    private static final float SWIPE_Y_MAX_DISTANCE_DEFAULT = 500;
+    public static final float SWIPE_Y_MAX_DISTANCE_DEFAULT = 500;
     private float swipeYMaxDistance;
 
     private Callback mCallback;
