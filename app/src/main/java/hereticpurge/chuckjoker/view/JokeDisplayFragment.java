@@ -154,7 +154,7 @@ public class JokeDisplayFragment extends Fragment implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg != null) {
+        if (arg != null && arg instanceof JokeItem) {
             showJoke((JokeItem) arg);
         }
     }
