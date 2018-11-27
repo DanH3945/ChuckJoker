@@ -19,6 +19,7 @@
 
     // Ad Strings
     <string name="ads_test_banner_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ads_production_banner_unit_id">ca-app-pub-6867545641745773/9065384385</string>
 
     // Menu Overflow Strings
     <string name="menu_about_title">About</string>

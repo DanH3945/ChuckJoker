@@ -2,8 +2,10 @@ package hereticpurge.chuckjoker.model;
 
 import android.content.Context;
 
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.TreeMap;
 
 import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.apiservice.ApiClient;
@@ -29,7 +31,12 @@ public class JokeController extends Observable {
 
     private ApiClient mApiClient;
 
+    private Map<Integer, JokeItem> jokeCache;
+
     private JokeController() {
+
+        jokeCache = new TreeMap<>();
+
         Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiReference.ICNDB_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -71,6 +78,12 @@ public class JokeController extends Observable {
     }
 
     public void loadJoke(Context context, int id) {
+
+        if (jokeCache.containsKey(id)) {
+            setCurrentJoke(jokeCache.get(id));
+            return;
+        }
+
         Call<ApiJokeItem> call = mApiClient.getJoke(String.valueOf(id));
         call.enqueue(new Callback<ApiJokeItem>() {
             @Override
@@ -110,6 +123,11 @@ public class JokeController extends Observable {
     }
 
     private void setCurrentJoke(JokeItem jokeItem) {
+
+        if (!jokeCache.containsKey(jokeItem.getId())) {
+            jokeCache.put(jokeItem.getId(), jokeItem);
+        }
+
         mCurrentJoke = jokeItem;
         mCurrentJokeId = mCurrentJoke.getId();
         setChanged();

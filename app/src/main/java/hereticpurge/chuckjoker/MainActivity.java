@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import hereticpurge.chuckjoker.view.AboutDialogFragment;
 import hereticpurge.chuckjoker.view.JokeDisplayFragment;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         // END OF REQUIRED TIMBER LOAD
 
         setContentView(R.layout.activity_main);
+
+        MobileAds.initialize(this, "ca-app-pub-6867545641745773~7912084810");
 
 
         if (savedInstanceState == null) {
