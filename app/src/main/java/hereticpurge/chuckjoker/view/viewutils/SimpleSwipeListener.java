@@ -3,8 +3,6 @@ package hereticpurge.chuckjoker.view.viewutils;
 import android.view.MotionEvent;
 import android.view.View;
 
-import timber.log.Timber;
-
 public class SimpleSwipeListener implements View.OnTouchListener {
 
     public interface Callback {
@@ -20,21 +18,28 @@ public class SimpleSwipeListener implements View.OnTouchListener {
 
     // the min distance a user must swipe across the screen for this listener to register it as
     // a swipe.
-    final float SWIPE_X_MIN_DISTANCE = 200;
+    private static final float SWIPE_X_MIN_DISTANCE_DEFAULT = 200;
+    private float swipeXMinDistance;
 
     // the max y distance (up / down) a user is allowed to press before the event won't be
     // recognized.
-    final float SWIPE_Y_MAX_DISTANCE = 500;
+    private static final float SWIPE_Y_MAX_DISTANCE_DEFAULT = 500;
+    private float swipeYMaxDistance;
 
     private Callback mCallback;
 
     public SimpleSwipeListener(Callback callback) {
-        mCallback = callback;
+        this(callback, SWIPE_X_MIN_DISTANCE_DEFAULT, SWIPE_Y_MAX_DISTANCE_DEFAULT);
+    }
+
+    public SimpleSwipeListener(Callback callback, float xMinDistance, float yMaxDistance) {
+        this.mCallback = callback;
+        this.swipeXMinDistance = xMinDistance;
+        this.swipeYMaxDistance = yMaxDistance;
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        Timber.d("Caught motion event.");
         // send the click to the view so that other methods (accessibility stuff) can see
         // that an event occured and where.
         // v.performClick();
@@ -44,8 +49,6 @@ public class SimpleSwipeListener implements View.OnTouchListener {
                 // store the starting position
                 xStart = event.getX();
                 yStart = event.getY();
-                Timber.d("X POSITION: " + Float.toString(xStart));
-                Timber.d("Y POSITION: " + Float.toString(yStart));
                 break;
 
             case MotionEvent.ACTION_UP:
@@ -58,14 +61,13 @@ public class SimpleSwipeListener implements View.OnTouchListener {
                 float yTrans = Math.abs(yStop - yStart);
 
                 // making sure the motion was intentional by ensuring motion distances.
-                if (xTrans > SWIPE_X_MIN_DISTANCE && yTrans < SWIPE_Y_MAX_DISTANCE) {
+                if (xTrans > swipeXMinDistance && yTrans < swipeYMaxDistance) {
                     if (xStart > xStop) {
                         mCallback.onSwipeRightToLeft();
                     } else {
                         mCallback.onSwipeLeftToRight();
                     }
                 }
-                Timber.d("----------  MOTION EVENT BREAK  ----------");
                 break;
         }
         // tell the system that the event was handled.
