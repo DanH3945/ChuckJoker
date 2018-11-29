@@ -13,10 +13,10 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
+import hereticpurge.chuckjoker.logging.TimberReleaseTree;
 import hereticpurge.chuckjoker.view.AboutDialogFragment;
 import hereticpurge.chuckjoker.view.JokeDisplayFragment;
 import hereticpurge.chuckjoker.view.PreferenceFragment;
-import hereticpurge.chuckjoker.logging.TimberReleaseTree;
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,9 +31,11 @@ public class MainActivity extends AppCompatActivity {
         if (BuildConfig.DEBUG) {
             // Timber debug tree
             Timber.plant(new Timber.DebugTree());
+            Timber.d("Loaded Debug Tree");
         } else {
             // Timber Release Tree
             Timber.plant(new TimberReleaseTree());
+            Timber.d("Loaded Release Tree");
         }
         // END OF REQUIRED TIMBER LOAD
 
@@ -46,9 +48,11 @@ public class MainActivity extends AppCompatActivity {
             loadFragment(getJokeDisplayFragment(), false, null);
         }
 
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
+        AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
+        if (BuildConfig.DEBUG) {
+            adRequestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
+        }
+        AdRequest adRequest = adRequestBuilder.build();
 
         AdView mAdView = findViewById(R.id.included_ad_view);
         mAdView.loadAd(adRequest);
