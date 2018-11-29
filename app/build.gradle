@@ -54,18 +54,35 @@ dependencies {
     implementation "com.google.android.gms:play-services-analytics:$rootProject.googleAnalyticsVersion"
     implementation "com.google.android.gms:play-services-ads:$rootProject.googleAdsVersion"
 
-    // 3rd party libraries
+    // Gson Libraries
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+
+    // License Dialog Libraries
     implementation "de.psdev.licensesdialog:licensesdialog:$rootProject.licenseDialogVersion"
+
+    // Picasso Libraries
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
+
+    // Timber Libraries
     implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
+
+    // Okhttp Libraries
     implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttpVersion"
+
+    // RxJava Libraries
     implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxjavaAndroidVersion"
     implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion"
+
+    // Retrofit Libraries
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+
+    // Dagger 2 Libraries
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
 
     // Room database libraries
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
