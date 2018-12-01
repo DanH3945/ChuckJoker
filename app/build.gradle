@@ -89,6 +89,9 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$rootProject.roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"
 
+    // Butterknife Libraries
+    implementation "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
 
     // Test dependencies
     testImplementation 'junit:junit:4.12'

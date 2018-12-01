@@ -18,7 +18,8 @@ buildscript {
         rxjavaAndroidVersion = '2.1.0'
         rxjavaVersion = '2.2.2'
         retrofitVersion = '2.1.0'
-        daggerVersion = "2.19"
+        daggerVersion = '2.19'
+        butterknifeVersion = '9.0.0-rc2'
     }
     
     repositories {
