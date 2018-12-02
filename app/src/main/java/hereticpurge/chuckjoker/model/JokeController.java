@@ -9,8 +9,8 @@ import java.util.TreeMap;
 
 import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.apiservice.ApiClient;
-import hereticpurge.chuckjoker.apiservice.ApiJokeCountItem;
-import hereticpurge.chuckjoker.apiservice.ApiJokeItem;
+import hereticpurge.chuckjoker.apiservice.apimodel.ApiJokeCountItem;
+import hereticpurge.chuckjoker.apiservice.apimodel.ApiJokeItem;
 import hereticpurge.chuckjoker.apiservice.ApiReference;
 import retrofit2.Call;
 import retrofit2.Callback;
