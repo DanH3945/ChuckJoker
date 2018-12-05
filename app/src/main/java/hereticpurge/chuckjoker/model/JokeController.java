@@ -2,6 +2,7 @@ package hereticpurge.chuckjoker.model;
 
 import android.content.Context;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -12,6 +13,8 @@ import hereticpurge.chuckjoker.apiservice.ApiClient;
 import hereticpurge.chuckjoker.apiservice.apimodel.ApiJokeCountItem;
 import hereticpurge.chuckjoker.apiservice.apimodel.ApiJokeItem;
 import hereticpurge.chuckjoker.apiservice.ApiReference;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +40,11 @@ public class JokeController extends Observable {
 
         jokeCache = new TreeMap<>();
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(ApiReference.ICNDB_BASE_URL)
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder().build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiReference.ICNDB_BASE_URL)
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
