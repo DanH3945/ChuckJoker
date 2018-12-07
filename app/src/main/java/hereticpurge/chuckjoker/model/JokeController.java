@@ -2,7 +2,6 @@ package hereticpurge.chuckjoker.model;
 
 import android.content.Context;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
@@ -12,14 +11,9 @@ import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.apiservice.ApiClient;
 import hereticpurge.chuckjoker.apiservice.apimodel.ApiJokeCountItem;
 import hereticpurge.chuckjoker.apiservice.apimodel.ApiJokeItem;
-import hereticpurge.chuckjoker.apiservice.ApiReference;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
 public class JokeController extends Observable {
@@ -29,6 +23,7 @@ public class JokeController extends Observable {
     private int mCurrentJokeId;
 
     private int mTotalJokesAvailable;
+    private boolean jokeCountIsSet = false;
 
     private JokeItem mCurrentJoke;
 
@@ -39,18 +34,6 @@ public class JokeController extends Observable {
     private JokeController() {
 
         jokeCache = new TreeMap<>();
-
-        OkHttpClient okHttpClient = new OkHttpClient().newBuilder().build();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ApiReference.ICNDB_BASE_URL)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        mApiClient = retrofit.create(ApiClient.class);
-
-        setTotalJokeCount();
     }
 
     public static JokeController getJokeController(Context context) {
@@ -61,19 +44,26 @@ public class JokeController extends Observable {
         return sJokeController;
     }
 
-    private void setTotalJokeCount() {
-        Call<ApiJokeCountItem> call = mApiClient.getJokeCount();
-        call.enqueue(new Callback<ApiJokeCountItem>() {
-            @Override
-            public void onResponse(Call<ApiJokeCountItem> call, Response<ApiJokeCountItem> response) {
-                mTotalJokesAvailable = response.body().getValue();
-            }
+    public void setApiClient(ApiClient apiClient) {
+        mApiClient = apiClient;
+    }
 
-            @Override
-            public void onFailure(Call<ApiJokeCountItem> call, Throwable t) {
-                Timber.d(t);
-            }
-        });
+    public void setTotalJokeCount() {
+        if (!jokeCountIsSet) {
+            Call<ApiJokeCountItem> call = mApiClient.getJokeCount();
+            call.enqueue(new Callback<ApiJokeCountItem>() {
+                @Override
+                public void onResponse(Call<ApiJokeCountItem> call, Response<ApiJokeCountItem> response) {
+                    mTotalJokesAvailable = response.body().getValue();
+                    jokeCountIsSet = true;
+                }
+
+                @Override
+                public void onFailure(Call<ApiJokeCountItem> call, Throwable t) {
+                    Timber.d(t);
+                }
+            });
+        }
     }
 
     public JokeItem getCurrentJoke() {
