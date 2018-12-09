@@ -1,4 +1,4 @@
-package hereticpurge.chuckjoker.daggermodules;
+package hereticpurge.chuckjoker.dagger.modules;
 
 import android.content.Context;
 
@@ -32,15 +32,11 @@ public class NetworkModule {
     }
 
     @Provides
-    public JokeController jokeController(ApiClient apiClient) {
+    public JokeController jokeController(ApiClient apiClient, Context context) {
         JokeController jokeController = JokeController.getJokeController();
-        jokeController.setApiClient(apiClient);
+        jokeController.setApiClient(apiClient, context);
         jokeController.setTotalJokeCount();
         return jokeController;
-    }
-
-    @Provides Context applicationContext() {
-
     }
 
 }

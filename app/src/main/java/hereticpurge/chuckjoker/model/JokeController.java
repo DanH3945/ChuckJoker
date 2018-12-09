@@ -7,6 +7,8 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.TreeMap;
 
+import javax.inject.Inject;
+
 import hereticpurge.chuckjoker.R;
 import hereticpurge.chuckjoker.apiservice.ApiClient;
 import hereticpurge.chuckjoker.apiservice.apimodel.ApiJokeCountItem;
@@ -36,16 +38,16 @@ public class JokeController extends Observable {
         jokeCache = new TreeMap<>();
     }
 
-    public static JokeController getJokeController(Context context) {
+    public static JokeController getJokeController() {
         if (sJokeController == null) {
             sJokeController = new JokeController();
-            sJokeController.loadJoke(context, 1);
         }
         return sJokeController;
     }
 
-    public void setApiClient(ApiClient apiClient) {
+    public void setApiClient(ApiClient apiClient, Context context) {
         mApiClient = apiClient;
+        sJokeController.loadJoke(context, 1);
     }
 
     public void setTotalJokeCount() {

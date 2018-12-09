@@ -21,6 +21,9 @@ import java.util.Observer;
 
 import hereticpurge.chuckjoker.ChuckJokerApplication;
 import hereticpurge.chuckjoker.R;
+import hereticpurge.chuckjoker.dagger.components.DaggerJokeControllerComponent;
+import hereticpurge.chuckjoker.dagger.components.JokeControllerComponent;
+import hereticpurge.chuckjoker.dagger.modules.ContextModule;
 import hereticpurge.chuckjoker.model.JokeController;
 import hereticpurge.chuckjoker.model.JokeItem;
 import hereticpurge.chuckjoker.view.viewutils.LoadingSpinner;
@@ -66,7 +69,13 @@ public class JokeDisplayFragment extends Fragment implements Observer {
             mTracker = ((ChuckJokerApplication) getActivity().getApplication()).getDefaultTracker();
         }
 
-        mJokeController = JokeController.getJokeController(getContext());
+        // mJokeController = JokeController.getJokeController(getContext());
+
+        JokeControllerComponent jokeControllerComponent = DaggerJokeControllerComponent.builder()
+                .contextModule(new ContextModule(getContext()))
+                .build();
+
+        mJokeController = jokeControllerComponent.getJokeController();
 
         view.setOnTouchListener(new SimpleSwipeListener(new SimpleSwipeListener.Callback() {
             @Override
