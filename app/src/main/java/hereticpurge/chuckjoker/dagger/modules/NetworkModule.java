@@ -2,11 +2,14 @@ package hereticpurge.chuckjoker.dagger.modules;
 
 import android.content.Context;
 
+import java.io.File;
+
 import dagger.Module;
 import dagger.Provides;
 import hereticpurge.chuckjoker.apiservice.ApiClient;
 import hereticpurge.chuckjoker.apiservice.ApiReference;
 import hereticpurge.chuckjoker.model.JokeController;
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -15,8 +18,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
 
     @Provides
-    public OkHttpClient okHttpClient() {
+    public OkHttpClient okHttpClient(Context context) {
+        File cacheFile = new File(context.getCacheDir(), "okhttpcache");
+        cacheFile.mkdirs();
+
+        // 10MB cache
+        Cache cache = new Cache(cacheFile, 10 * 10 * 1000);
+
         return new OkHttpClient.Builder()
+                .cache(cache)
                 .build();
     }
 
