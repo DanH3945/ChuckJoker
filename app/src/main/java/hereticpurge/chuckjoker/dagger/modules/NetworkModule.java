@@ -18,12 +18,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
 
     @Provides
-    public OkHttpClient okHttpClient(Context context) {
+    public Cache okHttpCache(Context context){
         File cacheFile = new File(context.getCacheDir(), "okhttpcache");
         cacheFile.mkdirs();
 
         // 10MB cache
-        Cache cache = new Cache(cacheFile, 10 * 10 * 1000);
+        return new Cache(cacheFile, 10 * 10 * 1000);
+    }
+
+    @Provides
+    public OkHttpClient okHttpClient(Context context, Cache cache) {
 
         return new OkHttpClient.Builder()
                 .cache(cache)
