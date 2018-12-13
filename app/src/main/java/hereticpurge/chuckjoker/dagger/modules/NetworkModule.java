@@ -27,7 +27,7 @@ public class NetworkModule {
     }
 
     @Provides
-    public OkHttpClient okHttpClient(Context context, Cache cache) {
+    public OkHttpClient okHttpClient(Cache cache) {
 
         return new OkHttpClient.Builder()
                 .cache(cache)
