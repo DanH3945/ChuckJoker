@@ -68,14 +68,6 @@ public class JokeController extends Observable {
         }
     }
 
-    public JokeItem getCurrentJoke() {
-        return mCurrentJoke;
-    }
-
-    public int getCurrentJokeId() {
-        return mCurrentJokeId;
-    }
-
     public void loadJoke(Context context, int id) {
 
         if (jokeCache.containsKey(id)) {
