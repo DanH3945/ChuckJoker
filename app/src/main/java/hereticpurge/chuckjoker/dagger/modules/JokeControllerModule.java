@@ -2,12 +2,17 @@ package hereticpurge.chuckjoker.dagger.modules;
 
 import android.content.Context;
 
+import com.google.android.gms.common.api.Api;
+
 import java.io.File;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import hereticpurge.chuckjoker.apiservice.ApiClient;
 import hereticpurge.chuckjoker.apiservice.ApiReference;
+import hereticpurge.chuckjoker.dagger.scopes.JokeControllerScope;
 import hereticpurge.chuckjoker.model.JokeController;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
@@ -15,9 +20,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
-public class NetworkModule {
+public class JokeControllerModule {
 
     @Provides
+    @JokeControllerScope
     public Cache okHttpCache(Context context){
         File cacheFile = new File(context.getCacheDir(), "okhttpcache");
         cacheFile.mkdirs();
@@ -27,6 +33,7 @@ public class NetworkModule {
     }
 
     @Provides
+    @JokeControllerScope
     public OkHttpClient okHttpClient(Cache cache) {
 
         return new OkHttpClient.Builder()
@@ -35,6 +42,7 @@ public class NetworkModule {
     }
 
     @Provides
+    @JokeControllerScope
     public ApiClient apiClient(OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiReference.ICNDB_BASE_URL)
@@ -46,11 +54,9 @@ public class NetworkModule {
     }
 
     @Provides
-    public JokeController jokeController(ApiClient apiClient, Context context) {
-        JokeController jokeController = JokeController.getJokeController();
-        jokeController.setApiClient(apiClient, context);
-        jokeController.setTotalJokeCount();
-        return jokeController;
+    @JokeControllerScope
+    public JokeController jokeController(Context context, ApiClient apiClient) {
+        return JokeController.getJokeController(context, apiClient);
     }
 
 }

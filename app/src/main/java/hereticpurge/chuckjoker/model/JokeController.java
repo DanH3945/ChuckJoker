@@ -18,60 +18,61 @@ import timber.log.Timber;
 
 public class JokeController extends Observable {
 
-    private static JokeController sJokeController;
-
     private int mCurrentJokeId;
 
     private int mTotalJokesAvailable;
-    private boolean jokeCountIsSet = false;
 
     private JokeItem mCurrentJoke;
 
-    private ApiClient mApiClient;
-
     private Map<Integer, JokeItem> jokeCache;
 
-    private JokeController() {
+    private Context mContext;
+
+    private ApiClient mApiClient;
+
+    private static JokeController sJokeController;
+
+    private JokeController(Context context, ApiClient apiClient) {
+
+        mContext = context;
+        mApiClient = apiClient;
 
         jokeCache = new TreeMap<>();
+
+        setTotalJokeCount();
+        loadJoke(mContext, 1);
     }
 
-    public static JokeController getJokeController() {
+    public static JokeController getJokeController(Context context, ApiClient apiClient) {
         if (sJokeController == null) {
-            sJokeController = new JokeController();
+            sJokeController = new JokeController(context, apiClient);
         }
+
         return sJokeController;
     }
 
-    public void setApiClient(ApiClient apiClient, Context context) {
-        if (mApiClient == null) {
-            mApiClient = apiClient;
-            sJokeController.loadJoke(context, 1);
-        }
-    }
+    private void setTotalJokeCount() {
 
-    public void setTotalJokeCount() {
-        if (!jokeCountIsSet) {
-            Call<ApiJokeCountItem> call = mApiClient.getJokeCount();
-            call.enqueue(new Callback<ApiJokeCountItem>() {
-                @Override
-                public void onResponse(Call<ApiJokeCountItem> call, Response<ApiJokeCountItem> response) {
-                    mTotalJokesAvailable = response.body().getValue();
-                    jokeCountIsSet = true;
-                }
+        Call<ApiJokeCountItem> call = mApiClient.getJokeCount();
+        call.enqueue(new Callback<ApiJokeCountItem>() {
+            @Override
+            public void onResponse(Call<ApiJokeCountItem> call, Response<ApiJokeCountItem> response) {
+                mTotalJokesAvailable = response.body().getValue();
+            }
 
-                @Override
-                public void onFailure(Call<ApiJokeCountItem> call, Throwable t) {
-                    Timber.d(t);
-                }
-            });
-        }
+            @Override
+            public void onFailure(Call<ApiJokeCountItem> call, Throwable t) {
+                Timber.d(t);
+            }
+        });
+
     }
 
     public void loadJoke(Context context, int id) {
 
         if (jokeCache.containsKey(id)) {
             setCurrentJoke(jokeCache.get(id));
+            Timber.d("Cache contains joke #: " + id + " loading!!");
             return;
         }
 
