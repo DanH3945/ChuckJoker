@@ -2,11 +2,7 @@ package hereticpurge.chuckjoker.dagger.modules;
 
 import android.content.Context;
 
-import com.google.android.gms.common.api.Api;
-
 import java.io.File;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -24,7 +20,7 @@ public class JokeControllerModule {
 
     @Provides
     @JokeControllerScope
-    public Cache okHttpCache(Context context){
+    public Cache okHttpCache(Context context) {
         File cacheFile = new File(context.getCacheDir(), "okhttpcache");
         cacheFile.mkdirs();
 
