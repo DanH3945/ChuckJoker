@@ -4,6 +4,7 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
+import hereticpurge.chuckjoker.dagger.qualifiers.ActivityContextQualifier;
 
 @Module
 public class ContextModule {
@@ -15,7 +16,8 @@ public class ContextModule {
     }
 
     @Provides
-    public Context getContext() {
+    @ActivityContextQualifier
+    public Context context() {
         return context;
     }
 }

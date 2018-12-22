@@ -8,6 +8,7 @@ import dagger.Module;
 import dagger.Provides;
 import hereticpurge.chuckjoker.apiservice.ApiClient;
 import hereticpurge.chuckjoker.apiservice.ApiReference;
+import hereticpurge.chuckjoker.dagger.qualifiers.ActivityContextQualifier;
 import hereticpurge.chuckjoker.dagger.scopes.JokeControllerScope;
 import hereticpurge.chuckjoker.model.JokeController;
 import okhttp3.Cache;
@@ -20,7 +21,7 @@ public class JokeControllerModule {
 
     @Provides
     @JokeControllerScope
-    public Cache okHttpCache(Context context) {
+    public Cache okHttpCache(@ActivityContextQualifier Context context) {
         File cacheFile = new File(context.getCacheDir(), "okhttpcache");
         cacheFile.mkdirs();
 
@@ -51,7 +52,7 @@ public class JokeControllerModule {
 
     @Provides
     @JokeControllerScope
-    public JokeController jokeController(Context context, ApiClient apiClient) {
+    public JokeController jokeController(@ActivityContextQualifier Context context, ApiClient apiClient) {
         return JokeController.getJokeController(context, apiClient);
     }
 
