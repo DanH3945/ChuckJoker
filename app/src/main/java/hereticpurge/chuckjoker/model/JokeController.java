@@ -58,6 +58,7 @@ public class JokeController extends Observable {
             @Override
             public void onResponse(Call<ApiJokeCountItem> call, Response<ApiJokeCountItem> response) {
                 mTotalJokesAvailable = response.body().getValue();
+                Timber.d("Setting joke count: %s", response.body().getValue());
             }
 
             @Override
@@ -124,6 +125,10 @@ public class JokeController extends Observable {
         mCurrentJokeId = mCurrentJoke.getId();
         setChanged();
         notifyObservers(mCurrentJoke);
+    }
+
+    public JokeItem getCurrentJoke() {
+        return mCurrentJoke;
     }
 
     public void nextJoke(Context context) {

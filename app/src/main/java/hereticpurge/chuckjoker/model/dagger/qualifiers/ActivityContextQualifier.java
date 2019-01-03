@@ -1,4 +1,4 @@
-package hereticpurge.chuckjoker.dagger.qualifiers;
+package hereticpurge.chuckjoker.model.dagger.qualifiers;
 
 import javax.inject.Qualifier;
 

@@ -21,11 +21,11 @@ import java.util.Observer;
 
 import hereticpurge.chuckjoker.ChuckJokerApplication;
 import hereticpurge.chuckjoker.R;
-import hereticpurge.chuckjoker.dagger.components.DaggerJokeControllerComponent;
-import hereticpurge.chuckjoker.dagger.components.JokeControllerComponent;
-import hereticpurge.chuckjoker.dagger.modules.ContextModule;
 import hereticpurge.chuckjoker.model.JokeController;
 import hereticpurge.chuckjoker.model.JokeItem;
+import hereticpurge.chuckjoker.model.dagger.components.DaggerJokeControllerComponent;
+import hereticpurge.chuckjoker.model.dagger.components.JokeControllerComponent;
+import hereticpurge.chuckjoker.model.dagger.modules.ContextModule;
 import hereticpurge.chuckjoker.view.viewutils.LoadingSpinner;
 import hereticpurge.chuckjoker.view.viewutils.SimpleSwipeListener;
 

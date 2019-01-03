@@ -1,10 +1,10 @@
-package hereticpurge.chuckjoker.dagger.modules;
+package hereticpurge.chuckjoker.model.dagger.modules;
 
 import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
-import hereticpurge.chuckjoker.dagger.qualifiers.ActivityContextQualifier;
+import hereticpurge.chuckjoker.model.dagger.qualifiers.ActivityContextQualifier;
 
 @Module
 public class ContextModule {

@@ -1,4 +1,4 @@
-package hereticpurge.chuckjoker.dagger.modules;
+package hereticpurge.chuckjoker.model.dagger.modules;
 
 import android.content.Context;
 
@@ -8,9 +8,9 @@ import dagger.Module;
 import dagger.Provides;
 import hereticpurge.chuckjoker.apiservice.ApiClient;
 import hereticpurge.chuckjoker.apiservice.ApiReference;
-import hereticpurge.chuckjoker.dagger.qualifiers.ActivityContextQualifier;
-import hereticpurge.chuckjoker.dagger.scopes.JokeControllerScope;
 import hereticpurge.chuckjoker.model.JokeController;
+import hereticpurge.chuckjoker.model.dagger.qualifiers.ActivityContextQualifier;
+import hereticpurge.chuckjoker.model.dagger.scopes.JokeControllerScope;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
