@@ -26,21 +26,17 @@ public class JokeController extends Observable {
 
     private Map<Integer, JokeItem> jokeCache;
 
-    private Context mContext;
-
     private ApiClient mApiClient;
 
     private static JokeController sJokeController;
 
     private JokeController(Context context, ApiClient apiClient) {
-
-        mContext = context;
         mApiClient = apiClient;
 
         jokeCache = new TreeMap<>();
 
         setTotalJokeCount();
-        loadJoke(mContext, 1);
+        loadJoke(context, 1);
     }
 
     public static JokeController getJokeController(Context context, ApiClient apiClient) {
