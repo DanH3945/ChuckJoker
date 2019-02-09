@@ -148,11 +148,12 @@ public class JokeDisplayFragment extends Fragment implements Observer {
 
     private void showJoke(JokeItem jokeItem) {
         String jokeBody = jokeItem.getJoke();
-        int jokeNumber = jokeItem.getId();
+        String jokeNumber = String.valueOf(jokeItem.getId());
 
         if (jokeBody != null && !jokeBody.equals("")) {
             String jokeBodyFromHtml = android.text.Html.fromHtml(jokeBody).toString();
-            mCurrentJokeNumText.setText(String.valueOf(jokeNumber));
+
+            mCurrentJokeNumText.setText(jokeNumber);
             mJokeBodyTextView.setText(jokeBodyFromHtml);
             mLoadingSpinner.hideLoadingSpinner();
             return;
