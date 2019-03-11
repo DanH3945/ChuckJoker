@@ -1,4 +1,4 @@
-package hereticpurge.chuckjoker.apiservice;
+package hereticpurge.chuckjoker.api;
 
 public class ApiReference {
 

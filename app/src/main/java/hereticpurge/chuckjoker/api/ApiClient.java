@@ -1,7 +1,7 @@
-package hereticpurge.chuckjoker.apiservice;
+package hereticpurge.chuckjoker.api;
 
-import hereticpurge.chuckjoker.apiservice.apimodel.ApiJokeCountItem;
-import hereticpurge.chuckjoker.apiservice.apimodel.ApiJokeItem;
+import hereticpurge.chuckjoker.api.apimodel.ApiJokeCountItem;
+import hereticpurge.chuckjoker.api.apimodel.ApiJokeItem;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

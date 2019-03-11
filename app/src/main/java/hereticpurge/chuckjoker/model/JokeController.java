@@ -8,9 +8,9 @@ import java.util.Observer;
 import java.util.TreeMap;
 
 import hereticpurge.chuckjoker.R;
-import hereticpurge.chuckjoker.apiservice.ApiClient;
-import hereticpurge.chuckjoker.apiservice.apimodel.ApiJokeCountItem;
-import hereticpurge.chuckjoker.apiservice.apimodel.ApiJokeItem;
+import hereticpurge.chuckjoker.api.ApiClient;
+import hereticpurge.chuckjoker.api.apimodel.ApiJokeCountItem;
+import hereticpurge.chuckjoker.api.apimodel.ApiJokeItem;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

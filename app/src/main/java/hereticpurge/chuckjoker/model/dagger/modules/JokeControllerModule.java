@@ -6,8 +6,8 @@ import java.io.File;
 
 import dagger.Module;
 import dagger.Provides;
-import hereticpurge.chuckjoker.apiservice.ApiClient;
-import hereticpurge.chuckjoker.apiservice.ApiReference;
+import hereticpurge.chuckjoker.api.ApiClient;
+import hereticpurge.chuckjoker.api.ApiReference;
 import hereticpurge.chuckjoker.model.JokeController;
 import hereticpurge.chuckjoker.model.dagger.qualifiers.ActivityContextQualifier;
 import hereticpurge.chuckjoker.model.dagger.scopes.JokeControllerScope;

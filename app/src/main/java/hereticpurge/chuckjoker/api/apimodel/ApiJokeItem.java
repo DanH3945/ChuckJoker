@@ -1,4 +1,4 @@
-package hereticpurge.chuckjoker.apiservice.apimodel;
+package hereticpurge.chuckjoker.api.apimodel;
 
 import hereticpurge.chuckjoker.model.JokeItem;
 
